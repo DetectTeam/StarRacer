@@ -7,12 +7,12 @@ public class DrawLineMouse : MonoBehaviour
 {
 	[SerializeField] private Texture2D lineTex;
 	[SerializeField] private int maxPoints = 5000;
-	[SerializeField] private float lineWidth = 20.0f;
+	[SerializeField] private float lineWidth = 8.0f;
 	[SerializeField] private int minPixelMove = 5;	// Must move at least this many pixels per sample for a new segment to be recorded
 	[SerializeField] private bool useEndCap = false;
 	[SerializeField] private Texture2D capLineTex;
 	[SerializeField] private Texture2D capTex;
-	[SerializeField] private float capLineWidth = 20.0f;
+	[SerializeField] private float capLineWidth = 8.0f;
 // If line3D is true, the line is drawn in the scene rather than as an overlay. Note that in this demo, the line will look the same
 // in the game view either way, but you can see the difference in the scene view.
 	[SerializeField] private bool line3D = false;
