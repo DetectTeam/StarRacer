@@ -15,10 +15,14 @@ public class LevelHandler : MonoBehaviour
 	[SerializeField] int currentLevel = 0;
 	[SerializeField] bool demoMode;
 
+	[SerializeField] bool enablePlayerPrefs;
+
 
 	void Start()
 	{
-		//PlayerPrefs.DeleteAll();
+		
+		if( !enablePlayerPrefs )
+			PlayerPrefs.DeleteAll();
 	
 		//When the level is loaded
 		//Check what value the current level has 0 - 3 
