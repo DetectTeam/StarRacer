@@ -32,16 +32,22 @@ public class EndScreen : MonoBehaviour
 
 	IEnumerator IEActivateEndBackground()
 	{
-			Debug.Log( "END SCREEN ON ENABLE CALLED" );
+			//Shrink before making active
+			endScreenBackground.transform.localScale = new Vector3( 0.01f, 0.01f, 0.01f );
 			endScreenBackground.SetActive( true );
+			
+			//Scale back to 1 to 1 ratio
 			iTween.ScaleTo ( endScreenBackground, iTween.Hash ("scale", new Vector3 (1.0f,1.0f,1.0f), "speed", speed, "easetype", "linear"));
 
 			yield return new WaitForSeconds( 0.3f );
 
-			//Punch animation when correct star is encountered
+			//Add punch after scale is complete
 		    iTween.PunchScale( endScreenBackground, iTween.Hash( "x",+.3, "y",+.3, "time",1.0f));
 
+			yield return new WaitForSeconds( 1.25f );
 
+			//Pause Game
+			Time.timeScale = 0.0f;
 
 	}
 
