@@ -5,6 +5,8 @@ using UnityEngine.Profiling;
 
 public class DrawLineMouse : MonoBehaviour 
 {
+
+	[SerializeField] private Canvas lineContainer;
 	[SerializeField] private Texture2D lineTex;
 	[SerializeField] private int maxPoints = 5000;
 	[SerializeField] private float lineWidth = 8.0f;
@@ -66,6 +68,9 @@ public class DrawLineMouse : MonoBehaviour
 
 		if( firstStar != null )
 			lastNode = firstStar;
+
+
+		
 	
 	}
 
@@ -242,7 +247,9 @@ public class DrawLineMouse : MonoBehaviour
 		//VectorLine.canvas.renderMode = RenderMode.ScreenSpaceCamera;
 		
 		//Set the default sorting order for the line. In this case make it appear behind objects.
-		VectorLine.canvas.sortingOrder = 20;
+		//VectorLine.canvas.sortingOrder = 20;
+
+		
 
 		if ( useEndCap ) 
 		{

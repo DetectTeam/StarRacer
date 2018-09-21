@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
 		
 	}
 
-	//The Actuall Game loop
+	//The Actual Game loop
 	IEnumerator PlayLevelRoutine()
 	{
 		if (playLevelEvent != null)
@@ -216,6 +216,18 @@ public class GameManager : MonoBehaviour
 	public void Resume()
 	{
 		Time.timeScale = 1;
+	}
+
+	public void TogglePause()
+	{
+		if( Time.timeScale > 0 )
+		{
+			Time.timeScale = 0.0f;
+		}
+		else
+		{
+			Time.timeScale = 1.0f;
+		}
 	}
 
 
