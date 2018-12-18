@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class StarManager : MonoBehaviour 
 {
+	
 	public static StarManager instance = null;
 	public Star firstStar;
 	public static int score = 0;
@@ -14,11 +15,14 @@ public class StarManager : MonoBehaviour
 	//public int PreviousStar { get{ return previousStar; } set{ previousStar = value; Debug.Log( previousStar ); } }
 	//Records the number of points of the line the last time the player selected the correct number
 	public static int lastSuccessPointCount = 0; 
+	[SerializeField] private int delay;
 	[SerializeField] private int starCount;
 	[SerializeField] private float vertExtent;
 	[SerializeField] private float horzExtent;
 
 	[SerializeField] private bool isLetter;
+
+	[SerializeField] private string[] letterLevel;
 
 	void Awake()
 	{
@@ -42,6 +46,8 @@ public class StarManager : MonoBehaviour
 
 		while( true )
 		{
+			isLetter = ( Random.value < 0.5f );
+
 			for( int x = 0; x < starCount; x++ )
 			{
 				//AddStarsToPool( 1 );
@@ -49,7 +55,7 @@ public class StarManager : MonoBehaviour
 				CreateStarFromPool();
 			}
 
-			yield return new WaitForSeconds( 500.0f );	
+			yield return new WaitForSeconds( delay );	
 
 			Messenger.Broadcast( "Disable" );
 		}
@@ -71,10 +77,25 @@ public class StarManager : MonoBehaviour
 	private void CreateStarFromPool()
 	{
 		var star = StarPool.Instance.Get();
+
+		if( count == 1 )
+			star.IsCorrect = true;
+
+		star.OrderIndex = count;	
 		
-		star.gameObject.name = "Star_" + count; 
+		if( isLetter )
+		{
+			star.gameObject.name = "Star_" + letterLevel[ count-1 ]; 
+			star.NumberText.text = letterLevel[ count-1 ].ToString();	
+		}
+		else
+		{
+			star.gameObject.name = "Star_" + count; 
+			star.NumberText.text = count.ToString();
+		}	
+
 		star.transform.parent = transform;
-		star.NumberText.text = count.ToString();
+	
 		star.gameObject.SetActive( true );
 		
 		count ++;

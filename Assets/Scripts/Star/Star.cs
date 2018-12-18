@@ -5,8 +5,8 @@ using TMPro;
 
 public class Star : MonoBehaviour 
 {
-
-
+	[SerializeField] private int orderIndex;
+	public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
 	[SerializeField] private string uid;
 	[SerializeField] private TextMeshPro numberText;
 	public TextMeshPro NumberText { get{ return numberText; } set{ numberText = value; } }
@@ -16,6 +16,7 @@ public class Star : MonoBehaviour
 	[SerializeField] private Collider2D[] hits;
 	[SerializeField] private bool isValidPosition;
 	[SerializeField] private bool isCorrect;
+	public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
 	[SerializeField] private SpriteRenderer starSpriteRenderer;
 
 	private void Start()
@@ -27,6 +28,7 @@ public class Star : MonoBehaviour
 	private void OnEnable()
 	{
 		Messenger.AddListener( "Disable" , Disable );
+		Messenger<int>.AddListener( "NextStar", NextStar  );
 		
 		SetCameraBounds();
 		_transform = transform;
@@ -37,6 +39,7 @@ public class Star : MonoBehaviour
 	private void OnDisable()
 	{
 		Messenger.RemoveListener( "Disable" , Disable );
+		Messenger<int>.RemoveListener( "NextStar", NextStar  );
 	}
 
 	private string CreateUID()
@@ -75,13 +78,17 @@ public class Star : MonoBehaviour
 			CorrectSelection();
 		else
 			IncorrectSelection();
-	
 	}
 
 	private void CorrectSelection()
 	{
 		StarFxHandler.Instance.PunchScale( this.gameObject );
 		StarFxHandler.Instance.ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
+		isCorrect = false;
+
+		//Broadcast message to all stars
+		//pass the next starcount
+		Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
 	}
 
 	private void IncorrectSelection()
@@ -102,6 +109,11 @@ public class Star : MonoBehaviour
 	{
 		gameObject.SetActive( false );
 		StarPool.Instance.ReturnToPool( this );
+	}
 
+	private void NextStar( int nextStar )
+	{
+		if( nextStar == orderIndex )
+			isCorrect = true;
 	}
 }
