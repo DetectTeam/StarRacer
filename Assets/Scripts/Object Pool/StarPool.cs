@@ -1,0 +1,1 @@
+﻿public class StarPool : GenericObjectPool<Star>{}
