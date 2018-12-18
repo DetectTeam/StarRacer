@@ -19,28 +19,36 @@ public class Star : MonoBehaviour
 	public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
 	[SerializeField] private SpriteRenderer starSpriteRenderer;
 
+	[SerializeField] private Star[] proximityStars;
+
+	[SerializeField] private Color[] starColours;
+
 	private void Start()
 	{
 		SetCameraBounds();
-		_transform = transform;
+		_transform = transform;	
 	}
 
 	private void OnEnable()
 	{
 		Messenger.AddListener( "Disable" , Disable );
-		Messenger<int>.AddListener( "NextStar", NextStar  );
+		Messenger<int>.AddListener( "NextStar", NextStar );
+		Messenger.AddListener( "ProximityCheck" , FindProximityStars );
 		
 		SetCameraBounds();
 		_transform = transform;
 		uid = CreateUID();
 		FindPositionToSpawn();
-		FindProximityStars();
+
+		starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
+		GetComponent<Collider2D>().enabled = true;
 	}
 
 	private void OnDisable()
 	{
 		Messenger.RemoveListener( "Disable" , Disable );
 		Messenger<int>.RemoveListener( "NextStar", NextStar  );
+		Messenger.RemoveListener( "ProximityCheck" , FindProximityStars );
 	}
 
 	private string CreateUID()
@@ -62,7 +70,9 @@ public class Star : MonoBehaviour
 			{
 				isValidPosition = true;
 			}
-		}	
+		}
+
+		
 	}
 
 	private Vector3 GetRandomPosition()
@@ -73,6 +83,7 @@ public class Star : MonoBehaviour
 	private void OnMouseDown()
 	{
 		if( isCorrect )
+
 			CorrectSelection();
 		else
 			IncorrectSelection();
@@ -88,6 +99,8 @@ public class Star : MonoBehaviour
 		//Broadcast message to all stars
 		//pass the next starcount
 		Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
+
+		GetComponent<Collider2D>().enabled = false;
 	}
 
 	private void IncorrectSelection()
@@ -118,6 +131,27 @@ public class Star : MonoBehaviour
 
 	private void FindProximityStars()
 	{
+		Debug.Log( "FindingProximityStars" );
 		
+		int radius = 1;
+		bool allFound = false;
+
+		Collider2D[] hits = null;
+
+		while( !allFound )
+		{
+			hits = Physics2D.OverlapCircleAll( transform.position, radius );
+
+			if( hits.Length == 5 )
+			{
+				Debug.Log( "Found all proximity stars: " + radius );
+				allFound = true;
+			}
+
+			radius ++;
+			
+		
+		}
+
 	}
 }

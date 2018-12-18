@@ -21,8 +21,7 @@ public class StarManager : MonoBehaviour
 	[SerializeField] private float horzExtent;
 	[SerializeField] private bool isLetter;
 	[SerializeField] private string[] letterLevel;
-	[SerializeField] private Star[] proximityStars;
-
+	
 	void Awake()
 	{
 		if( instance == null )
@@ -53,6 +52,9 @@ public class StarManager : MonoBehaviour
 				yield return new WaitForSeconds( 0.1f );
 				CreateStarFromPool();
 			}
+			yield return new WaitForSeconds( delay );
+
+			Messenger.Broadcast( "ProximityCheck" );
 
 			yield return new WaitForSeconds( delay );	
 
@@ -100,6 +102,8 @@ public class StarManager : MonoBehaviour
 		count ++;
 		
 		if( count > 25 )
+		{
 			count = 1;
+		}
 	}
 }
