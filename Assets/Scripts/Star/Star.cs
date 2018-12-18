@@ -71,9 +71,6 @@ public class Star : MonoBehaviour
 
 	private void OnMouseDown()
 	{
-		Debug.Log( "STAR CLICKED" );
-		//iTween.PunchScale( gameObject, iTween.Hash( "x",+10, "y",+10, "time", 1.25f ));
-		//starSpriteRenderer.color = new Color( 0.9716f, 0.8722f, 0.1512f, 1 );	
 		if( isCorrect )
 			CorrectSelection();
 		else
@@ -86,6 +83,7 @@ public class Star : MonoBehaviour
 		StarFxHandler.Instance.ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
 		isCorrect = false;
 
+		Messenger.Broadcast( "UpdateScore" );
 		//Broadcast message to all stars
 		//pass the next starcount
 		Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );

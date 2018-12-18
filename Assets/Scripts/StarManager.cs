@@ -100,7 +100,7 @@ public class StarManager : MonoBehaviour
 		
 		count ++;
 		
-		if( count > 23 )
+		if( count > 25 )
 			count = 1;
 	}
 

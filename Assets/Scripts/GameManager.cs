@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	//[SerializeField] private PostProcessingBehaviour normal;
 	[SerializeField] private int score;
 	// Use this for initialization
+	public int Score { get{ return score; } set{ score = value; } }
 
 	[SerializeField] private int scoreLimit = 25;
 	[SerializeField] private int tutScoreLimit = 8;
@@ -53,11 +54,13 @@ public class GameManager : MonoBehaviour
 	void OnEnable()
 	{
 		Messenger<int>.AddListener( "ScoreLimit" , SetScoreLimit );
+		Messenger.AddListener( "UpdateScore", UpdateScore );
 	}
 
 	void OnDisable()
 	{
 		Messenger<int>.RemoveListener( "ScoreLimit" , SetScoreLimit );
+		Messenger.RemoveListener( "UpdateScore", UpdateScore );
 	}
 
 	void Awake()
@@ -182,7 +185,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	//Keep Track of player score
-	public void UpdateScore()
+	private void UpdateScore()
 	{
 		score++;
 	}
