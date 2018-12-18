@@ -34,6 +34,7 @@ public class Star : MonoBehaviour
 		_transform = transform;
 		uid = CreateUID();
 		FindPositionToSpawn();
+		FindProximityStars();
 	}
 
 	private void OnDisable()
@@ -113,5 +114,10 @@ public class Star : MonoBehaviour
 	{
 		if( nextStar == orderIndex )
 			isCorrect = true;
+	}
+
+	private void FindProximityStars()
+	{
+		
 	}
 }

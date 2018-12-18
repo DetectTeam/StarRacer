@@ -19,10 +19,9 @@ public class StarManager : MonoBehaviour
 	[SerializeField] private int starCount;
 	[SerializeField] private float vertExtent;
 	[SerializeField] private float horzExtent;
-
 	[SerializeField] private bool isLetter;
-
 	[SerializeField] private string[] letterLevel;
+	[SerializeField] private Star[] proximityStars;
 
 	void Awake()
 	{
@@ -103,6 +102,4 @@ public class StarManager : MonoBehaviour
 		if( count > 25 )
 			count = 1;
 	}
-
-
 }
