@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class Star : MonoBehaviour 
 {
@@ -18,10 +19,8 @@ public class Star : MonoBehaviour
 	[SerializeField] private bool isCorrect;
 	public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
 	[SerializeField] private SpriteRenderer starSpriteRenderer;
-
-	[SerializeField] private Star[] proximityStars;
-
 	[SerializeField] private Color[] starColours;
+	[SerializeField] private List<Collider2D> proximityStars;
 
 	private void Start()
 	{
@@ -70,9 +69,7 @@ public class Star : MonoBehaviour
 			{
 				isValidPosition = true;
 			}
-		}
-
-		
+		}	
 	}
 
 	private Vector3 GetRandomPosition()
@@ -113,7 +110,6 @@ public class Star : MonoBehaviour
 	{
 		vertExtent = Camera.main.orthographicSize - 2;    
         horzExtent = ( vertExtent * Screen.width / Screen.height );
-
 		horzExtent = horzExtent - 1;
 	}
 
@@ -128,30 +124,16 @@ public class Star : MonoBehaviour
 		if( nextStar == orderIndex )
 			isCorrect = true;
 	}
-
+	
 	private void FindProximityStars()
 	{
-		Debug.Log( "FindingProximityStars" );
-		
-		int radius = 1;
+		int radius = 15;
 		bool allFound = false;
 
 		Collider2D[] hits = null;
 
-		while( !allFound )
-		{
-			hits = Physics2D.OverlapCircleAll( transform.position, radius );
+		hits = Physics2D.OverlapCircleAll( transform.position, radius );
 
-			if( hits.Length == 5 )
-			{
-				Debug.Log( "Found all proximity stars: " + radius );
-				allFound = true;
-			}
-
-			radius ++;
-			
-		
-		}
-
+		proximityStars = hits.OrderBy(	x => Vector2.Distance(this.transform.position,x.transform.position)	).ToList();			
 	}
 }
