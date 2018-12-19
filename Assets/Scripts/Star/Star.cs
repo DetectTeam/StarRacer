@@ -7,6 +7,8 @@ using System.Linq;
 public class Star : MonoBehaviour 
 {
 	[SerializeField] private int orderIndex;
+
+	[SerializeField] private float proximityRadius;
 	public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
 	[SerializeField] private string uid;
 	[SerializeField] private TextMeshPro numberText;
@@ -63,7 +65,7 @@ public class Star : MonoBehaviour
 		{
 			_transform.position = GetRandomPosition();
 
-			hits = Physics2D.OverlapCircleAll( transform.position, 3.0f );
+			hits = Physics2D.OverlapCircleAll( transform.position, proximityRadius );
 
 			if( hits.Length <= 1 )
 			{
@@ -127,12 +129,13 @@ public class Star : MonoBehaviour
 	
 	private void FindProximityStars()
 	{
-		int radius = 15;
+		int radius = 12;
 		bool allFound = false;
-
 		Collider2D[] hits = null;
+		
+		proximityStars.Clear();
 
-		hits = Physics2D.OverlapCircleAll( transform.position, radius );
+		hits = Physics2D.OverlapCircleAll( transform.position, radius, 1 << LayerMask.NameToLayer( "Star" ) );
 
 		proximityStars = hits.OrderBy(	x => Vector2.Distance(this.transform.position,x.transform.position)	).ToList();			
 	}
