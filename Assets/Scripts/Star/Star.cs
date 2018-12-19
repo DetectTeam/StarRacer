@@ -135,8 +135,9 @@ public class Star : MonoBehaviour
 		
 		proximityStars.Clear();
 
-		hits = Physics2D.OverlapCircleAll( transform.position, radius, 1 << LayerMask.NameToLayer( "Star" ) );
+		proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );
+		//hits = Physics2D.OverlapCircleAll( transform.position, radius, 1 << LayerMask.NameToLayer( "Star" ) );
 
-		proximityStars = hits.OrderBy(	x => Vector2.Distance(this.transform.position,x.transform.position)	).ToList();			
+		//proximityStars = hits.OrderBy(	x => Vector2.Distance(this.transform.position,x.transform.position)	).ToList();			
 	}
 }
