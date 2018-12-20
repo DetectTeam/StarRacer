@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] GameObject canvas;
 	[SerializeField] private bool isLevelOver;
 	[SerializeField] private bool istutorial;
+	
 	public static GameManager Instance = null;
 
 
@@ -94,23 +95,17 @@ public class GameManager : MonoBehaviour
 	//Start the Game Loop
 	IEnumerator RunGameLoop()
 	{
-		
 		//Handles level setup
 		yield return StartCoroutine("StartLevelRoutine");
 		yield return StartCoroutine("PlayLevelRoutine");
-		yield return StartCoroutine("EndLevelRoutine");
-			
+		yield return StartCoroutine("EndLevelRoutine");	
 	}
 
 	IEnumerator StartSplashRoutine()
 	{
-	
 		yield return new WaitForSeconds( 1.0f );
-		
 		yield return new WaitForSeconds( 2.0f );
-
 		SceneManager.LoadSceneAsync( "TrailMakingIntro" );
-
 	}
 
 

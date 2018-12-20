@@ -6,20 +6,25 @@ using System.Linq;
 
 public class Star : MonoBehaviour 
 {
-	[SerializeField] private int orderIndex;
+	private Transform _transform;
 
-	[SerializeField] private float proximityRadius;
+	[SerializeField] private int orderIndex;
 	public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
+	
+	[SerializeField] private float proximityRadius;
 	[SerializeField] private string uid;
+	
 	[SerializeField] private TextMeshPro numberText;
 	public TextMeshPro NumberText { get{ return numberText; } set{ numberText = value; } }
-	private Transform _transform;
+	
 	[SerializeField] private float vertExtent;
 	[SerializeField] private float horzExtent;
 	[SerializeField] private Collider2D[] hits;
 	[SerializeField] private bool isValidPosition;
+	
 	[SerializeField] private bool isCorrect;
 	public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
+	
 	[SerializeField] private SpriteRenderer starSpriteRenderer;
 	[SerializeField] private Color[] starColours;
 	[SerializeField] private List<Collider2D> proximityStars;
@@ -129,15 +134,9 @@ public class Star : MonoBehaviour
 	
 	private void FindProximityStars()
 	{
-		int radius = 12;
-		bool allFound = false;
-		Collider2D[] hits = null;
+		int radius = 10;
 		
 		proximityStars.Clear();
-
-		proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );
-		//hits = Physics2D.OverlapCircleAll( transform.position, radius, 1 << LayerMask.NameToLayer( "Star" ) );
-
-		//proximityStars = hits.OrderBy(	x => Vector2.Distance(this.transform.position,x.transform.position)	).ToList();			
+		proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );	
 	}
 }

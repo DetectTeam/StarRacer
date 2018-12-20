@@ -11,7 +11,7 @@ public class Link : MonoBehaviour
 
 	public float delay = 0.1f;
 
-	public iTween.EaseType easeType = iTween.EaseType.easeInOutExpo;
+	//public iTween.EaseType easeType = iTween.EaseType.easeInOutExpo;
 
 	private Transform _transform;
 
@@ -50,14 +50,14 @@ public class Link : MonoBehaviour
 		//Shift link forward by border amount
 		_transform.position = startPosition + ( _transform.forward * borderWidth );
 
-		iTween.ScaleTo( gameObject, iTween.Hash(
+		// iTween.ScaleTo( gameObject, iTween.Hash(
 
-			"time", scaleTime,
-			"scale", newScale,
-			"easetype", easeType,
-			"delay", delay
+		// 	"time", scaleTime,
+		// 	"scale", newScale,
+		// 	"easetype", easeType,
+		// 	"delay", delay
 
-		));
+		// ));
 	}
 
 

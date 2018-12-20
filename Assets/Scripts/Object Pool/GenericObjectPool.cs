@@ -26,8 +26,6 @@ public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
 		var newObject = GameObject.Instantiate( prefab );
 		newObject.gameObject.SetActive( false );
 		objects.Enqueue( newObject );
-
-		Debug.Log( "Objects Length : " + objects.Count );
 	}
 
 	public void ReturnToPool( T objectToReturn )

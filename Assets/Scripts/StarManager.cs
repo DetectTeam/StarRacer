@@ -52,7 +52,7 @@ public class StarManager : MonoBehaviour
 				yield return null;
 				CreateStarFromPool();
 			}
-			yield return new WaitForSeconds( 0.25f );
+			yield return new WaitForSeconds( 1.0f );
 
 			Messenger.Broadcast( "ProximityCheck" );
 
