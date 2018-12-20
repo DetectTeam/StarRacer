@@ -21,6 +21,8 @@ public class StarManager : MonoBehaviour
 	[SerializeField] private float horzExtent;
 	[SerializeField] private bool isLetter;
 	[SerializeField] private string[] letterLevel;
+
+	[SerializeField] private bool isFirstRun = true;
 	
 	void Awake()
 	{
@@ -36,30 +38,45 @@ public class StarManager : MonoBehaviour
 		//DontDestroyOnLoad( gameObject );
 	}
 
-	IEnumerator Start()
+	private void Start()
 	{
-		previousStar = -1;
+		//previousStar = -1;
 
-		previousStarObject = firstStar;
+		//previousStarObject = firstStar;
+		//LoadRandomLevel();
+		
+	}
 
-		while( true )
+	public void  DisableStars()
+	{
+		Messenger.Broadcast( "Disable" );
+	}
+
+	public void LoadRandomLevel() 
+	{ 
+		StartCoroutine( "IELoadRandomLevel" );
+	}
+
+	private IEnumerator IELoadRandomLevel()
+	{
+		// if( !isFirstRun  )
+		// 	Messenger.Broadcast( "Disable" );
+
+		//yield return new WaitForSeconds( 1.0f );	
+		
+		isLetter = ( Random.value < 0.5f );
+
+		for( int x = 0; x < starCount; x++ )
 		{
-			isLetter = ( Random.value < 0.5f );
-
-			for( int x = 0; x < starCount; x++ )
-			{
-				//AddStarsToPool( 1 );
-				yield return null;
-				CreateStarFromPool();
-			}
-			yield return new WaitForSeconds( 1.0f );
-
-			Messenger.Broadcast( "ProximityCheck" );
-
-			yield return new WaitForSeconds( delay );	
-
-			Messenger.Broadcast( "Disable" );
+			//AddStarsToPool( 1 );
+			yield return null;
+			CreateStarFromPool();
 		}
+		yield return new WaitForSeconds( 1.0f );
+
+		Messenger.Broadcast( "ProximityCheck" );
+
+		isFirstRun = false;
 	}
 
 
