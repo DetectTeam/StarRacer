@@ -47,11 +47,12 @@ public class Star : MonoBehaviour
 		FindPositionToSpawn();
 
 		starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
-		GetComponent<Collider2D>().enabled = true;
+		//GetComponent<Collider2D>().enabled = true;
 	}
 
 	private void OnDisable()
 	{
+		GetComponent<Collider2D>().enabled = true;
 		Messenger.RemoveListener( "Disable" , Disable );
 		Messenger<int>.RemoveListener( "NextStar", NextStar  );
 		Messenger.RemoveListener( "ProximityCheck" , FindProximityStars );
@@ -121,7 +122,7 @@ public class Star : MonoBehaviour
 	}
 
 	private void Disable()
-	{
+	{	
 		gameObject.SetActive( false );
 		StarPool.Instance.ReturnToPool( this );
 	}
