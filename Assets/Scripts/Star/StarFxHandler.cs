@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class StarFxHandler : MonoBehaviour 
 {
-	public static StarFxHandler Instance;
-	private void Awake()
-	{
-		if( Instance == null )
-		{
-			Instance = this;
-		}
-		else if( Instance != this )
-		{
-			Destroy( gameObject );
-		}
-	}
+
 
 
 	[SerializeField] private Color errorColour;

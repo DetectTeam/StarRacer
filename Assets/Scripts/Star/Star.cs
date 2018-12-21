@@ -96,8 +96,8 @@ public class Star : MonoBehaviour
 
 	private void CorrectSelection()
 	{
-		StarFxHandler.Instance.PunchScale( this.gameObject );
-		StarFxHandler.Instance.ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
+		GetComponent<StarFxHandler>().PunchScale( this.gameObject );
+		GetComponent<StarFxHandler>().ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
 		isCorrect = false;
 
 		Messenger.Broadcast( "UpdateScore" );
@@ -110,8 +110,8 @@ public class Star : MonoBehaviour
 
 	private void IncorrectSelection()
 	{
-		StarFxHandler.Instance.Shake( this.gameObject );
-		StarFxHandler.Instance.ColourFade( starSpriteRenderer, starSpriteRenderer.color );
+		GetComponent<StarFxHandler>().Shake( this.gameObject );
+		GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
 	}
 
 	private void SetCameraBounds()
