@@ -101,6 +101,7 @@ public class Star : MonoBehaviour
 		isCorrect = false;
 
 		Messenger.Broadcast( "UpdateScore" );
+		Messenger.Broadcast( "AddTime" );
 		//Broadcast message to all stars
 		//pass the next starcount
 		Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
@@ -112,6 +113,7 @@ public class Star : MonoBehaviour
 	{
 		GetComponent<StarFxHandler>().Shake( this.gameObject );
 		GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
+		Messenger.Broadcast( "SubtractTime" );
 	}
 
 	private void SetCameraBounds()

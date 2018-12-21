@@ -32,6 +32,18 @@ public class Timer : MonoBehaviour
 	private StringBuilder minutes;
 	private StringBuilder seconds;
 
+	private void OnEnable()
+	{
+		Messenger.AddListener( "AddTime", AddToTime );
+		Messenger.AddListener( "SubtractTime", SubtractFromTime );
+	}
+
+	private void  OnDisable()
+	{
+		Messenger.RemoveListener( "AddTime", AddToTime );
+		Messenger.RemoveListener( "SubtractTime", SubtractFromTime );
+	}
+
 	
 	// Use this for initialization
 	void Start () 
@@ -43,33 +55,49 @@ public class Timer : MonoBehaviour
 			sessionManager = gameManager.GetComponent<SessionManager>();
 
 		timerText = GetComponent<TextMeshProUGUI>();
+		timerText.enabled = false;
 
 		minutes = new StringBuilder("");	
 		seconds = new StringBuilder("");
 		timeTaken = new StringBuilder("");
 		timeTakenSeconds = new StringBuilder("");
-		
+	
 	}
 
-
-	
-	// Update is called once per frame
-	void Update () 
+	[SerializeField] private float timeLeft;
+    private IEnumerator CountDown()
 	{
-		
-		if( isTimerRunning )
+		float count = 0;
+		timerText.enabled = true;
+		DisplayTime();
+
+		yield return new WaitForSeconds( 1.0f );
+
+		while( timeLeft > 0 )
 		{
-			
+			yield return new WaitForSeconds( 0.1f );
+			count ++;
+			if( count == 10 )
+			{
+				timeLeft --;
+				DisplayTime();
+				count = 0;
+			}	
+		}
+
+		Debug.Log( "Game Over" );
+	}
+	
+	private void DisplayTime()
+	{
 			minutes.Clear();
 			seconds.Clear();
 			timeTaken.Clear();
 			timeTakenSeconds.Clear();
 			
-			timeTakenfloat = t = Time.time - startTime;
+			t = timeLeft;
 
-			//string minutes = "";
-			//string seconds = "";
-			
+
 			if( ((int)t / 60 ) < 10 )
 			{
 				minutes.Append( "0" + ( (int) t / 60 ).ToString(  ) ) ;
@@ -97,30 +125,58 @@ public class Timer : MonoBehaviour
 
 
 			timeTakenSeconds.Append( minutes + ":" + ( t % 60 ).ToString( "F2" ));
-
-	
-		}
-
-		
 	}
-
-	
-
 	
 	//Triggered when game starts
 	public void StartTimer() 
 	{
-		isTimerRunning = true;
+		//isTimerRunning = true;
+		StartCoroutine( "CountDown" );
 	}
 
 	//Triggered when player completes a level
 	public void StopTimer()
 	{
+		StopCoroutine( "CountDown" );
 		Debug.Log( "Time Taken : " +  timeTaken );
 		sessionManager.SessionDuration = timeTaken.ToString();
 		Debug.Log( "Time Taken  Session: " +  sessionManager.SessionDuration );
 		isTimerRunning  = false;
-		
-
 	}
+
+	public void AddToTime()
+	{
+		timeLeft = timeLeft + 3.0f;
+		DisplayTime();
+		PunchScale( timerText.gameObject );
+	}
+
+	public void SubtractFromTime()
+	{
+		timeLeft = timeLeft - 3.0f;
+		DisplayTime();
+		ColourFade( timerText.gameObject, timerText.color );
+	}
+
+	private void PunchScale( GameObject obj )
+	{
+		iTween.PunchScale( obj, iTween.Hash( "x", +0.5f, "y", +0.5f, "time", 1f ) );
+	}
+
+	[SerializeField] private Color errorColour;
+	public void ColourFade( GameObject obj, Color color  )
+	{
+	
+		 iTween.ValueTo ( obj, iTween.Hash (
+					"from", errorColour, 
+					"to", color, 
+					"time", 1.25f, 
+					"easetype", "easeInCubic", 
+					"onUpdate","UpdateColor"));
+	}
+
+	private void UpdateColor( Color newColor )
+ 	{
+    	 timerText.color = newColor;
+ 	}
 }

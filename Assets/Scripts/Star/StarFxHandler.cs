@@ -21,7 +21,7 @@ public class StarFxHandler : MonoBehaviour
 					"onUpdate","UpdateColor"));
 	}
 
-	private void UpdateColor(Color newColor)
+	private void UpdateColor( Color newColor )
  	{
     	 spriteRenderer.color = newColor;
  	}
