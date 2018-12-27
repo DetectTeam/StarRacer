@@ -154,6 +154,10 @@ public class Timer : MonoBehaviour
 	public void SubtractFromTime()
 	{
 		timeLeft = timeLeft - 3.0f;
+
+		if( timeLeft < 0 )
+			timeLeft = 0;
+			
 		DisplayTime();
 		ColourFade( timerText.gameObject, timerText.color );
 	}
