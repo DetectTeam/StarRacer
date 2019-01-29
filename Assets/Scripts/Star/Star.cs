@@ -33,6 +33,8 @@ namespace StarRacer
 
 		[SerializeField] private TextMeshPro starText;
 
+		[SerializeField] private float starPosX, starPosY;
+
 		private void Start()
 		{
 			SetCameraBounds();
@@ -53,6 +55,9 @@ namespace StarRacer
 			starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
 
 			starText = transform.Find( "StarText" ).GetComponent<TextMeshPro>();
+
+			starPosX = transform.position.x;
+			starPosY = transform.position.y;
 	
 			//GetComponent<Collider2D>().enabled = true;
 		}
@@ -113,10 +118,10 @@ namespace StarRacer
 
 		private void CorrectSelection()
 		{
-			
 			SessionManager.Instance.SetRelativeTimeOfResponse();
 
 			SessionManager.Instance.SetTargetStar();
+			SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
 			SessionManager.Instance.LevelLayoutCount ++;
 
 			SessionManager.Instance.SetCorrect( 1 );
@@ -131,9 +136,7 @@ namespace StarRacer
 			//pass the next starcount
 			Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
 
-			GetComponent<Collider2D>().enabled = false;
-
-		
+			GetComponent<Collider2D>().enabled = false;	
 		}
 
 		private void IncorrectSelection()

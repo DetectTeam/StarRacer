@@ -25,8 +25,8 @@ namespace StarRacer
 		public int ProximityError { get; set; }
 		public int PreservativeError { get; set; }
 		public string RT { get; set; }
-		public string Target_Response_Location_X { get; set; }
-		public string Target_Response_Location_Y { get; set; }
+		public float Target_Response_Location_X { get; set; }
+		public float Target_Response_Location_Y { get; set; }
 		public string Response_Location_X { get; set; }
 		public string Response_Location_Y { get; set; }
 		public string Distance_From_Target { get; set; }

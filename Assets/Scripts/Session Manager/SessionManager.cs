@@ -107,6 +107,12 @@ namespace StarRacer
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
 		}
 
+		public void SetTargetResponseLocation( float x , float y )
+		{
+			playerSelection.Target_Response_Location_X = x;
+			playerSelection.Target_Response_Location_Y = y;
+		}
+
 		public void CreateSelection()
 		{
 			Debug.Log( "Creating new Selection" );
@@ -184,6 +190,11 @@ namespace StarRacer
 		// {
 		// 	session.PreservativeError = perservativeError;
 		// }
+
+		public void CalculateRelativeTime()
+		{
+			playerSelection.RT = "1000";
+		}
 
 		public void EndSession()
 		{
