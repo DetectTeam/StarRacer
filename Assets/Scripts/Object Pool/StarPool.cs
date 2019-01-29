@@ -1,1 +1,4 @@
-﻿public class StarPool : GenericObjectPool<Star>{}
+﻿namespace StarRacer
+{
+    public class StarPool : GenericObjectPool<Star>{}
+}

@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
-using GameSessions;
+
 using Newtonsoft.Json;
 
 
@@ -41,27 +41,30 @@ public class PersistenceManager : MonoBehaviour
 
 	public void Save( System.Object objectToSave ) 
 	{
-    	Debug.Log("Saving " +  GetPath() + "upload/" + fileName );
+		string jsonString = JsonConvert.SerializeObject( objectToSave );
 
-		string directoryPath = GetPath() + "upload/";
+		Debug.Log( jsonString );
+		
+		//Debug.Log("Saving " +  GetPath() + "upload/" + fileName );
+		// string directoryPath = GetPath() + "upload/";
 
-		 //check if directory doesn't exit
- 		if(!Directory.Exists(directoryPath))
- 		{    
-     		//if it doesn't, create it
-			Debug.Log("Directory Path does not exist. So im creating it for you."); 
-     		Directory.CreateDirectory(directoryPath);
- 		}
-		else
-		{
-			Debug.Log( "Directory exists . We are good to go :)" );
-		}
+		//  //check if directory doesn't exit
+ 		// if(!Directory.Exists(directoryPath))
+ 		// {    
+     	// 	//if it doesn't, create it
+		// 	Debug.Log("Directory Path does not exist. So im creating it for you."); 
+     	// 	Directory.CreateDirectory(directoryPath);
+ 		// }
+		// else
+		// {
+		// 	Debug.Log( "Directory exists . We are good to go :)" );
+		// }
 
-		BinaryFormatter formatter = new BinaryFormatter();
+		// BinaryFormatter formatter = new BinaryFormatter();
     	
-		FileStream file = File.Open(  path + fileName, FileMode.OpenOrCreate );
-    	formatter.Serialize( file, objectToSave );
-    	file.Close();
+		// FileStream file = File.Open(  path + fileName, FileMode.OpenOrCreate );
+    	// formatter.Serialize( file, objectToSave );
+    	// file.Close();
 	}
 
 	public System.Object Load( string nameOfFile ) 
