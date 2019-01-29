@@ -31,6 +31,8 @@ namespace StarRacer
 		[SerializeField] private Color[] starColours;
 		[SerializeField] private List<Collider2D> proximityStars;
 
+		[SerializeField] private TextMeshPro starText;
+
 		private void Start()
 		{
 			SetCameraBounds();
@@ -49,6 +51,9 @@ namespace StarRacer
 			FindPositionToSpawn();
 
 			starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
+
+			starText = transform.Find( "StarText" ).GetComponent<TextMeshPro>();
+	
 			//GetComponent<Collider2D>().enabled = true;
 		}
 
@@ -62,7 +67,7 @@ namespace StarRacer
 
 		private string CreateUID()
 		{
-		return System.Guid.NewGuid().ToString();
+			return System.Guid.NewGuid().ToString();
 		}
 
 		private void FindPositionToSpawn()
@@ -89,7 +94,7 @@ namespace StarRacer
 
 		private void OnMouseDown()
 		{
-			
+			SessionManager.Instance.CreateSelection();
 			
 			if( isCorrect )
 			{
@@ -100,13 +105,22 @@ namespace StarRacer
 				IncorrectSelection();
 			}
 
+			if( starText )
+				SessionManager.Instance.SetResponse( starText.text );
+			
+			SessionManager.Instance.EndSelection();
 		}
 
 		private void CorrectSelection()
 		{
-			SessionManager.Instance.CreateSelection();
-			SessionManager.Instance.SetRelativeTimeOfResponse();
 			
+			SessionManager.Instance.SetRelativeTimeOfResponse();
+
+			SessionManager.Instance.SetTargetStar();
+			SessionManager.Instance.LevelLayoutCount ++;
+
+			SessionManager.Instance.SetCorrect( 1 );
+				
 			GetComponent<StarFxHandler>().PunchScale( this.gameObject );
 			GetComponent<StarFxHandler>().ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
 			isCorrect = false;
@@ -119,22 +133,20 @@ namespace StarRacer
 
 			GetComponent<Collider2D>().enabled = false;
 
-			SessionManager.Instance.LevelLayoutCount ++;
-			SessionManager.Instance.SetTargetStar();
-
-			SessionManager.Instance.SetCorrect( 1 );
-			SessionManager.Instance.EndSelection();
+		
 		}
 
 		private void IncorrectSelection()
 		{
+			
+			SessionManager.Instance.SetTargetStar();
+
+			SessionManager.Instance.SetCorrect( 0 );
+			
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
 			Messenger.Broadcast( "SubtractTime" );
 
-			SessionManager.Instance.SetTargetStar();
-
-			SessionManager.Instance.SetCorrect( 0 );
 		}
 
 		private void SetCameraBounds()

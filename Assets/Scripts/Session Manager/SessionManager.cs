@@ -165,10 +165,10 @@ namespace StarRacer
 		// 	session.Target_Distractor = targetDistractor;
 		// }
 
-		// public void SetResponse( int response )
-		// {
-		// 	session.Response = response;
-		// }
+		 public void SetResponse(string response )
+		{
+			playerSelection.Response = response;
+	 	}
 
 		public void SetCorrect( int correct )
 		{
@@ -207,7 +207,7 @@ namespace StarRacer
 
 		private void CleanUp()
 		{
-			levelCount = 0;
+			levelLayoutCount = 0;
 			levelLayout.Clear();	
 		}
 	}

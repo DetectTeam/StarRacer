@@ -20,7 +20,7 @@ namespace StarRacer
 		public int Interrupt { get; set; }
 		public string Target_Response_ID { get; set; }
 		public int Target_Distractor { get; set; }
-		public int Response { get; set; }
+		public string Response { get; set; }
 		public int Correct { get; set; }
 		public int ProximityError { get; set; }
 		public int PreservativeError { get; set; }
