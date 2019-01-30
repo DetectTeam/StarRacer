@@ -117,6 +117,8 @@ namespace StarRacer
 			star.transform.parent = transform;
 		
 			star.gameObject.SetActive( true );
+
+			SessionManager.Instance.CurrentLevelStars.Add( star );
 			
 			count ++;
 			

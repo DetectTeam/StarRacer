@@ -103,6 +103,8 @@ namespace StarRacer
 		private void OnMouseDown()
 		{
 			SessionManager.Instance.CreateSelection();
+			SessionManager.Instance.SetTargetStar();
+			
 			
 			if( isCorrect )
 			{
@@ -114,7 +116,8 @@ namespace StarRacer
 			}
 
 			if( starText )
-				SessionManager.Instance.SetResponse( starText.text );
+				
+			SessionManager.Instance.SetResponse( starText.text );
 
 			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
 			
@@ -125,7 +128,6 @@ namespace StarRacer
 		{
 			SessionManager.Instance.SetRelativeTimeOfResponse();
 
-			SessionManager.Instance.SetTargetStar();
 			//SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
 			SessionManager.Instance.LevelLayoutCount ++;
 
@@ -153,7 +155,6 @@ namespace StarRacer
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
 			Messenger.Broadcast( "SubtractTime" );
-
 		}
 
 		private void SetCameraBounds()

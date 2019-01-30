@@ -13,11 +13,9 @@ namespace StarRacer
 
 		//[SerializeField] private string deviceName;
 		[SerializeField] private string deviceModel;
-
 		[SerializeField] private string deviceName;
 		[SerializeField] private string deviceType;
 		[SerializeField] private string deviceUniqueIdentifier;
-
 		private Session session;
 		private PlayerSelection playerSelection;
 		public Session CurrentSession { get{ return session; } }
@@ -27,6 +25,9 @@ namespace StarRacer
 
 		[SerializeField] private List<string> levelLayout = new List<string>();
 		public List<string> LevelLayout { get{ return levelLayout; } set{ levelLayout = value; } }
+
+		[SerializeField] private List<Star> currentLevelStars = new List<Star>();
+		public List<Star> CurrentLevelStars { get{ return currentLevelStars; } set{ currentLevelStars = value; } }
 
 		[SerializeField] private int levelLayoutCount = 0;
 
@@ -105,12 +106,13 @@ namespace StarRacer
 		public void SetTargetStar( )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
+			SetTargetResponseLocation();
 		}
 
-		public void SetTargetResponseLocation( float x , float y )
+		public void SetTargetResponseLocation( )
 		{
-			playerSelection.Target_Response_Location_X = x;
-			playerSelection.Target_Response_Location_Y = y;
+			playerSelection.Target_Response_Location_X = currentLevelStars[ levelLayoutCount ].gameObject.transform.position.x;
+			playerSelection.Target_Response_Location_Y = currentLevelStars[ levelLayoutCount ].gameObject.transform.position.y;
 		}
 
 		public void SetResponseLocation( float x, float y )
@@ -136,13 +138,12 @@ namespace StarRacer
 			session.Absolute_Level_Start_Time = string.Format( "{0:hh-mm-ss}" , System.DateTime.Now );
 		}
 
-
 		private bool isFirstClick = false;
 		public void SetRelativeTimeOfResponse(  )
 		{
 			if( !isFirstClick )
 			{ 
-				playerSelection.Relative_Time_Of_Response = string.Format( "{0:hh-mm-ss}" , System.DateTime.Now );
+				playerSelection.Relative_Time_Of_Response = string.Format( "{0:hh:mm:ss}" , System.DateTime.Now );
 				isFirstClick = true;
 			}
 		}
@@ -204,7 +205,6 @@ namespace StarRacer
 
 		public void EndSession()
 		{
-			
 			CleanUp();
 			Debug.Log( "Ending Session" );
 			//Get the duration of the session
