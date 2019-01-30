@@ -20,7 +20,6 @@ namespace StarRacer
 		[SerializeField] private float horzExtent;
 		[SerializeField] private bool isLetter;
 		[SerializeField] private string[] letterLevel;
-
 		[SerializeField] private bool isFirstRun = true;
 		
 		void Awake()

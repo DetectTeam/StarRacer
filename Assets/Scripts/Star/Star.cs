@@ -35,6 +35,9 @@ namespace StarRacer
 
 		[SerializeField] private float starPosX, starPosY;
 
+		//public float StarPosX { get{} set{} }
+		public float StarPosY;
+
 		private void Start()
 		{
 			SetCameraBounds();
@@ -112,6 +115,8 @@ namespace StarRacer
 
 			if( starText )
 				SessionManager.Instance.SetResponse( starText.text );
+
+			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
 			
 			SessionManager.Instance.EndSelection();
 		}
@@ -121,7 +126,7 @@ namespace StarRacer
 			SessionManager.Instance.SetRelativeTimeOfResponse();
 
 			SessionManager.Instance.SetTargetStar();
-			SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
+			//SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
 			SessionManager.Instance.LevelLayoutCount ++;
 
 			SessionManager.Instance.SetCorrect( 1 );
@@ -141,7 +146,6 @@ namespace StarRacer
 
 		private void IncorrectSelection()
 		{
-			
 			SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.SetCorrect( 0 );

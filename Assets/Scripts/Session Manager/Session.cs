@@ -27,8 +27,8 @@ namespace StarRacer
 		public string RT { get; set; }
 		public float Target_Response_Location_X { get; set; }
 		public float Target_Response_Location_Y { get; set; }
-		public string Response_Location_X { get; set; }
-		public string Response_Location_Y { get; set; }
+		public float Response_Location_X { get; set; }
+		public float Response_Location_Y { get; set; }
 		public string Distance_From_Target { get; set; }
 		public string Location_X { get; set; }
 		public string Location_Y { get; set; }

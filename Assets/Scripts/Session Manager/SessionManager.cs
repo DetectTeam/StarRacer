@@ -113,6 +113,12 @@ namespace StarRacer
 			playerSelection.Target_Response_Location_Y = y;
 		}
 
+		public void SetResponseLocation( float x, float y )
+		{
+			playerSelection.Response_Location_X = x;
+			playerSelection.Response_Location_Y = y;
+		}
+
 		public void CreateSelection()
 		{
 			Debug.Log( "Creating new Selection" );
