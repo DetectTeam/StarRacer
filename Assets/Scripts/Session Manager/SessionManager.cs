@@ -138,14 +138,18 @@ namespace StarRacer
 		public void CreateSelection()
 		{
 			Debug.Log( "Creating new Selection" );
-			playerSelection = new PlayerSelection();	
+			playerSelection = new PlayerSelection();
+			
 		}
 
 		public void EndSelection()
 		{
 			Debug.Log( "Selection Ending" );
 			session.playerSelection.Add( playerSelection );
+		
 		}
+
+	
 
 		public void SetStartTime(  )
 		{

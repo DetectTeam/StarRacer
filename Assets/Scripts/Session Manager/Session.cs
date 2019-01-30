@@ -7,12 +7,12 @@ namespace StarRacer
 {
 	[System.Serializable]
 
-	// public class StarInfo
-	// {
-	// 	public string Location_X { get; set; }
-	// 	public string Location_Y { get; set; }
-	// 	public string Colour { get; set; }
-	// }
+	public class StarInfo
+	{
+		public string Location_X { get; set; }
+		public string Location_Y { get; set; }
+		public string Colour { get; set; }
+	}
 
 	public class PlayerSelection
 	{
@@ -30,9 +30,7 @@ namespace StarRacer
 		public float Response_Location_X { get; set; }
 		public float Response_Location_Y { get; set; }
 		public float Distance_From_Target { get; set; }
-		public string Location_X { get; set; }
-		public string Location_Y { get; set; }
-		public string Colour { get; set; }
+	
 	}
 
 	[System.Serializable]
@@ -59,5 +57,6 @@ namespace StarRacer
 		//public  List<Transition> transitions = new List<Transition>(); //Number of transitions that occured during a session
     	public string FileName { get; set; }
 		public List<PlayerSelection> playerSelection = new List<PlayerSelection>(); 
+		public List<StarInfo> starInfo = new List<StarInfo>(); 
 	}
 }
