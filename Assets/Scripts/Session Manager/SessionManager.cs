@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 using Newtonsoft.Json; //JSON NET Plugin
 
@@ -8,17 +10,20 @@ namespace StarRacer
 {
 	public class SessionManager : MonoBehaviour
 	{
-		 private static SessionManager _instance;
-   		 public static SessionManager Instance { get { return _instance; } }
+		private static SessionManager _instance;
+   		public static SessionManager Instance { get { return _instance; } }
+
+		private PlayerSelection playerSelection;
+
+		private Session session;
+		
+		public Session CurrentSession { get{ return session; } }
 
 		//[SerializeField] private string deviceName;
 		[SerializeField] private string deviceModel;
 		[SerializeField] private string deviceName;
 		[SerializeField] private string deviceType;
 		[SerializeField] private string deviceUniqueIdentifier;
-		private Session session;
-		private PlayerSelection playerSelection;
-		public Session CurrentSession { get{ return session; } }
 
 		[SerializeField] private string sessionDuration;
 		public string SessionDuration { get{ return sessionDuration; } set{ sessionDuration = value; }  }
@@ -46,6 +51,7 @@ namespace StarRacer
 		}
 
 		[SerializeField] private string timeToStartSession;
+
 		public string TimeToStartSession { get{ return timeToStartSession; } set{ 
 			timeToStartSession = value; 
 			if( timeToStartSession.Length > 0 )
@@ -97,12 +103,6 @@ namespace StarRacer
 			session.FileName = session.SessionName + ".dat";
 		}
 
-
-		// public int GetTargetStar()
-		// {
-
-		// }
-
 		public void SetTargetStar( )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
@@ -111,14 +111,28 @@ namespace StarRacer
 
 		public void SetTargetResponseLocation( )
 		{
-			playerSelection.Target_Response_Location_X = currentLevelStars[ levelLayoutCount ].gameObject.transform.position.x;
-			playerSelection.Target_Response_Location_Y = currentLevelStars[ levelLayoutCount ].gameObject.transform.position.y;
+			playerSelection.Target_Response_Location_X = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.x, 2 );
+			playerSelection.Target_Response_Location_Y = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.y, 2 );
 		}
 
 		public void SetResponseLocation( float x, float y )
 		{
-			playerSelection.Response_Location_X = x;
-			playerSelection.Response_Location_Y = y;
+			playerSelection.Response_Location_X = ( float ) Math.Round( x, 2 );
+			playerSelection.Response_Location_Y = ( float ) Math.Round( y, 2 );
+		}
+
+		[SerializeField] private GameObject responseGameObject;
+		public void SetResponseGameObject( GameObject obj )
+		{
+			responseGameObject = obj;
+		}
+
+		public void DistanceFromTarget( )
+		{
+			Debug.Log( "Level Layout Count: " +  levelLayoutCount );
+			
+			playerSelection.Distance_From_Target = ( float ) Math.Round( Vector2.Distance( responseGameObject.transform.position, currentLevelStars[ levelLayoutCount ].gameObject.transform.position ), 2 );
+			Debug.Log( "Distance : " + playerSelection.Distance_From_Target );
 		}
 
 		public void CreateSelection()
@@ -141,20 +155,29 @@ namespace StarRacer
 		private bool isFirstClick = false;
 		public void SetRelativeTimeOfResponse(  )
 		{
-			if( !isFirstClick )
-			{ 
-				playerSelection.Relative_Time_Of_Response = string.Format( "{0:hh:mm:ss}" , System.DateTime.Now );
-				isFirstClick = true;
-			}
+			// if( !isFirstClick )
+			// { 
+			// 	playerSelection.Relative_Time_Of_Response = string.Format( "{0:hh:mm:ss}" , System.DateTime.Now );
+			// 	isFirstClick = true;
+			// }
 		}
 
-		 public void SetHardCodedOrRandomized( int hardCodedOrRandomized )
-		 {
+		
+		private float tmpTime; 
+		public void CalculateRelativeTime( float timeElapsed )
+		{
+			tmpTime = tmpTime + timeElapsed;
+			playerSelection.Relative_Time_Of_Response = ( float ) Math.Round (  tmpTime * 1000, 0);
+			playerSelection.RT = ( float ) Math.Round ( timeElapsed * 1000, 0 );
+		}
+
+		public void SetHardCodedOrRandomized( int hardCodedOrRandomized )
+		{
 		 	if( hardCodedOrRandomized == 1 )
 			 	session.Hard_Coded_Or_Randomized  = "Random";
 			else
 				session.Hard_Coded_Or_Randomized = "Hard";
-		 }
+		}
 
 		// public void SetInterrupt( int interrupt )
 		// {
@@ -198,11 +221,7 @@ namespace StarRacer
 		// 	session.PreservativeError = perservativeError;
 		// }
 
-		public void CalculateRelativeTime()
-		{
-			playerSelection.RT = "1000";
-		}
-
+	
 		public void EndSession()
 		{
 			CleanUp();
@@ -212,6 +231,7 @@ namespace StarRacer
 			//Debug.Log( session );
 
 			isFirstClick = false;
+			tmpTime = 0;
 			
 			//Save the session
 			PersistenceManager.Instance.Save( session );

@@ -16,7 +16,7 @@ namespace StarRacer
 
 	public class PlayerSelection
 	{
-		public string Relative_Time_Of_Response { get; set; }
+		public float Relative_Time_Of_Response { get; set; }
 		public int Interrupt { get; set; }
 		public string Target_Response_ID { get; set; }
 		public int Target_Distractor { get; set; }
@@ -24,12 +24,12 @@ namespace StarRacer
 		public int Correct { get; set; }
 		public int ProximityError { get; set; }
 		public int PreservativeError { get; set; }
-		public string RT { get; set; }
+		public float RT { get; set; }
 		public float Target_Response_Location_X { get; set; }
 		public float Target_Response_Location_Y { get; set; }
 		public float Response_Location_X { get; set; }
 		public float Response_Location_Y { get; set; }
-		public string Distance_From_Target { get; set; }
+		public float Distance_From_Target { get; set; }
 		public string Location_X { get; set; }
 		public string Location_Y { get; set; }
 		public string Colour { get; set; }

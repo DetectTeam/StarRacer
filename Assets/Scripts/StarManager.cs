@@ -6,7 +6,7 @@ namespace StarRacer
 {
 	public class StarManager : MonoBehaviour 
 	{		
-		public static StarManager instance = null;
+		public static StarManager Instance = null;
 		public Star firstStar;
 		public static int score = 0;
 		public static int previousStar;
@@ -21,14 +21,24 @@ namespace StarRacer
 		[SerializeField] private bool isLetter;
 		[SerializeField] private string[] letterLevel;
 		[SerializeField] private bool isFirstRun = true;
+
+		[SerializeField] private GameObject lastStarSelected;
+		public GameObject LastStarSelected { get{ return lastStarSelected; } set{ lastStarSelected = value; } }
 		
+		[SerializeField] private float timeElapsedBetweenPresses = 0;
+		public float TimeElapsedBetweenPresses { get{ return timeElapsedBetweenPresses; } set{ timeElapsedBetweenPresses = value; } }
+
+		[SerializeField] private bool isButtonPressed = true;
+		public bool IsButtonPressed { get{ return isButtonPressed; } set{ isButtonPressed = value; } }
+ 
+
 		void Awake()
 		{
-			if( instance == null )
+			if( Instance == null )
 			{
-				instance = this;
+				Instance = this;
 			}
-			else if( instance != this )
+			else if( Instance != this )
 			{
 				Destroy( gameObject );
 			}
@@ -43,6 +53,17 @@ namespace StarRacer
 			//previousStarObject = firstStar;
 			//LoadRandomLevel();	
 		}
+
+
+		private void Update()
+		{
+			if( isButtonPressed )
+			{
+				timeElapsedBetweenPresses = timeElapsedBetweenPresses + Time.deltaTime;
+				//Debug.Log( timeElapsedBetweenPresses );
+			}
+		}
+
 
 		public void  DisableStars()
 		{
@@ -92,6 +113,7 @@ namespace StarRacer
 		}
 
 		private static int count = 1;
+		
 		private void CreateStarFromPool()
 		{
 			var star = StarPool.Instance.Get();

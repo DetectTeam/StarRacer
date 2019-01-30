@@ -35,6 +35,8 @@ namespace StarRacer
 
 		[SerializeField] private float starPosX, starPosY;
 
+		[SerializeField] private string distractor;
+
 		//public float StarPosX { get{} set{} }
 		public float StarPosY;
 
@@ -100,12 +102,28 @@ namespace StarRacer
 			return new Vector3( Random.Range( -horzExtent, horzExtent ), Random.Range( -vertExtent, vertExtent - 3 ), _transform.position.z  ) ;
 		}
 
+
+		[SerializeField] private int touchCount = 0;
+
 		private void OnMouseDown()
 		{
+			StarManager.Instance.IsButtonPressed = false;
+			
 			SessionManager.Instance.CreateSelection();
+
+			SessionManager.Instance.CalculateRelativeTime( StarManager.Instance.TimeElapsedBetweenPresses );
+
 			SessionManager.Instance.SetTargetStar();
-			
-			
+
+			if( starText )
+				SessionManager.Instance.SetResponse( starText.text );
+
+			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
+
+			SessionManager.Instance.SetResponseGameObject( this.gameObject );
+
+			SessionManager.Instance.DistanceFromTarget();
+
 			if( isCorrect )
 			{
 				CorrectSelection();
@@ -115,13 +133,12 @@ namespace StarRacer
 				IncorrectSelection();
 			}
 
-			if( starText )
-				
-			SessionManager.Instance.SetResponse( starText.text );
-
-			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
-			
 			SessionManager.Instance.EndSelection();
+
+			StarManager.Instance.LastStarSelected = this.gameObject;
+
+			StarManager.Instance.IsButtonPressed = true;
+
 		}
 
 		private void CorrectSelection()
@@ -129,6 +146,8 @@ namespace StarRacer
 			SessionManager.Instance.SetRelativeTimeOfResponse();
 
 			//SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
+			
+		
 			SessionManager.Instance.LevelLayoutCount ++;
 
 			SessionManager.Instance.SetCorrect( 1 );
