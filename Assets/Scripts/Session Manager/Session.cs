@@ -9,11 +9,13 @@ namespace StarRacer
 
 	public class StarInfo
 	{
-		public string Location_X { get; set; }
-		public string Location_Y { get; set; }
-		public string Colour { get; set; }
+		public float Location_X { get; set; }
+		public float Location_Y { get; set; }
+		//public string Colour { get; set; }
+		public int ColourCode { get; set; }
 	}
 
+	[System.Serializable]
 	public class PlayerSelection
 	{
 		public float Relative_Time_Of_Response { get; set; }

@@ -142,6 +142,7 @@ namespace StarRacer
 
 			SessionManager.Instance.CurrentLevelStars.Add( star );
 			
+			
 			count ++;
 			
 			if( count > 25 )

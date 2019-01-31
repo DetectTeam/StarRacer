@@ -36,11 +36,15 @@ namespace StarRacer
 		[SerializeField] private TextMeshPro starText;
 
 		[SerializeField] private float starPosX, starPosY;
+		public float StarPositionX { get{ return starPosX; } set{ starPosX = value; } }
+		public float StarPositionY { get{ return starPosY; } set{ starPosY = value; } }
+		[SerializeField] private int colourCode = 1;
+		public int Colourcode { get{ return colourCode; } set{ colourCode = value; } }
 
 		[SerializeField] private string distractor;
 
 		//public float StarPosX { get{} set{} }
-		public float StarPosY;
+		//public float StarPosY;
     	private void Start()
 		{
 			SetCameraBounds();
@@ -64,7 +68,9 @@ namespace StarRacer
 
 			starPosX = transform.position.x;
 			starPosY = transform.position.y;
-	
+
+			SessionManager.Instance.SetStarInfo( gameObject.GetComponent<Star>() );
+			//SessionManager.Instance.SetStarInfo( starPosX, starPosY, colourCode );
 			//GetComponent<Collider2D>().enabled = true;
 		}
 
@@ -103,7 +109,6 @@ namespace StarRacer
 			return new Vector3( Random.Range( -horzExtent, horzExtent ), Random.Range( -vertExtent, vertExtent - 3 ), _transform.position.z  ) ;
 		}
 
-
 		[SerializeField] private int touchCount = 0;
 
 		private void OnMouseDown()
@@ -139,16 +144,12 @@ namespace StarRacer
 			StarManager.Instance.LastStarSelected = this.gameObject;
 
 			StarManager.Instance.IsButtonPressed = true;
-
 		}
 
 		private void CorrectSelection()
 		{
-			SessionManager.Instance.SetRelativeTimeOfResponse();
-
 			//SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
 			
-		
 			SessionManager.Instance.LevelLayoutCount ++;
 
 			SessionManager.Instance.SetCorrect( 1 );
@@ -206,12 +207,5 @@ namespace StarRacer
 			proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );	
 		}
 
-		private void CheckForProximityError(  )
-		{
-			for( int i = 0; i < 5; i++ )
-			{
-				
-			}
-		}
 	}
 }

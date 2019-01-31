@@ -13,9 +13,9 @@ namespace StarRacer
 		private static SessionManager _instance;
    		public static SessionManager Instance { get { return _instance; } }
 
-		private PlayerSelection playerSelection;
-
 		private Session session;
+		private PlayerSelection playerSelection;
+		private StarInfo starInfo;
 		
 		public Session CurrentSession { get{ return session; } }
 
@@ -24,19 +24,22 @@ namespace StarRacer
 		[SerializeField] private string deviceName;
 		[SerializeField] private string deviceType;
 		[SerializeField] private string deviceUniqueIdentifier;
-
 		[SerializeField] private string sessionDuration;
 		public string SessionDuration { get{ return sessionDuration; } set{ sessionDuration = value; }  }
-
 		[SerializeField] private List<string> levelLayout = new List<string>();
 		public List<string> LevelLayout { get{ return levelLayout; } set{ levelLayout = value; } }
-
 		[SerializeField] private List<Star> currentLevelStars = new List<Star>();
 		public List<Star> CurrentLevelStars { get{ return currentLevelStars; } set{ currentLevelStars = value; } }
-
 		[SerializeField] private int levelLayoutCount = 0;
 
 		public int LevelLayoutCount { get{ return levelLayoutCount; } set{ levelLayoutCount = value; } }
+
+		[SerializeField] private string transitionDuration;
+		public string TransitionDuration { get{ return transitionDuration; } set{ transitionDuration = value; }  }
+
+		[SerializeField] private string sessionUid;
+
+		[SerializeField] private GameObject responseGameObject;
 
 		public void Awake()
 		{
@@ -60,19 +63,14 @@ namespace StarRacer
 			}	
 		} }
 
-		[SerializeField] private string transitionDuration;
-		public string TransitionDuration { get{ return transitionDuration; } set{ transitionDuration = value; }  }
-
-		[SerializeField] private string sessionUid;
-
 		void Start()
 		{	
-			Session session = new Session();
+			//session = new Session();
 			//deviceName = SystemInfo.deviceName;
-			session.DeviceModel = SystemInfo.deviceModel;
-			session.DeviceType = SystemInfo.deviceType.ToString();
-			session.DeviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
-			session.DeviceName = SystemInfo.deviceName;	
+			//session.DeviceModel = SystemInfo.deviceModel;
+			//session.DeviceType = SystemInfo.deviceType.ToString();
+			//session.DeviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
+			//session.DeviceName = SystemInfo.deviceName;	
 		}
 		
 		//Create a new Session
@@ -80,6 +78,8 @@ namespace StarRacer
 		public void CreateSession()
 		{
 			Debug.Log( "Creating new Session...." );
+
+		
 			
 			sessionUid = System.Guid.NewGuid().ToString();
 
@@ -123,7 +123,7 @@ namespace StarRacer
 			playerSelection.Response_Location_Y = ( float ) Math.Round( y, 2 );
 		}
 
-		[SerializeField] private GameObject responseGameObject;
+		
 		public void SetResponseGameObject( GameObject obj )
 		{
 			responseGameObject = obj;
@@ -170,24 +170,11 @@ namespace StarRacer
 		
 		}
 
-	
-
 		public void SetStartTime(  )
 		{
 			session.Absolute_Level_Start_Time = string.Format( "{0:hh-mm-ss}" , System.DateTime.Now );
 		}
 
-		private bool isFirstClick = false;
-		public void SetRelativeTimeOfResponse(  )
-		{
-			// if( !isFirstClick )
-			// { 
-			// 	playerSelection.Relative_Time_Of_Response = string.Format( "{0:hh:mm:ss}" , System.DateTime.Now );
-			// 	isFirstClick = true;
-			// }
-		}
-
-		
 		private float tmpTime; 
 		public void CalculateRelativeTime( float timeElapsed )
 		{
@@ -203,11 +190,6 @@ namespace StarRacer
 			else
 				session.Hard_Coded_Or_Randomized = "Hard";
 		}
-
-		// public void SetInterrupt( int interrupt )
-		// {
-		// 	session.Interrupt = interrupt;
-		// }
 
 		private int levelCount;
 		public void SetLevel(  )
@@ -236,10 +218,6 @@ namespace StarRacer
 			playerSelection.Correct = correct;
 		}
 
-		public void SetProximityError( int proximityError )
-		{
-			playerSelection.ProximityError = proximityError;
-		}
 
 		// public void SetPerservativeError( int perservativeError )
 		// {
@@ -249,13 +227,14 @@ namespace StarRacer
 	
 		public void EndSession()
 		{
+			
+			
 			CleanUp();
 			Debug.Log( "Ending Session" );
 			//Get the duration of the session
 			//session.SessionDuration = sessionDuration;
 			//Debug.Log( session );
 
-			isFirstClick = false;
 			tmpTime = 0;
 			
 			//Save the session
@@ -272,5 +251,34 @@ namespace StarRacer
 			levelLayoutCount = 0;
 			levelLayout.Clear();	
 		}
+
+		public void CreateNewStarInfoList()
+		{
+			starInfo = new StarInfo();
+		}
+
+		public void SetStarInfo( Star star )
+		{
+			//var star = starObj.GetComponent<Star>();
+			StarInfo starInfo = new StarInfo();
+			
+			starInfo.Location_X = star.StarPositionX;
+			starInfo.Location_Y = star.StarPositionY;
+			starInfo.ColourCode = star.Colourcode;
+
+			session.starInfo.Add( starInfo );
+		}
+
+		public void SetStarInfo( float x, float y, int colourCode )
+		{
+			StarInfo starInfo = new StarInfo();
+			
+			starInfo.Location_X = x;
+			starInfo.Location_Y = y;
+			starInfo.ColourCode = colourCode;
+
+			session.starInfo.Add( starInfo );
+		}
+
 	}
 }
