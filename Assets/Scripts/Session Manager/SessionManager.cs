@@ -113,6 +113,8 @@ namespace StarRacer
 		{
 			playerSelection.Target_Response_Location_X = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.x, 2 );
 			playerSelection.Target_Response_Location_Y = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.y, 2 );
+
+			Debug.Log( "Current Selection : " + currentLevelStars[ levelLayoutCount ].gameObject.name );
 		}
 
 		public void SetResponseLocation( float x, float y )
@@ -125,6 +127,25 @@ namespace StarRacer
 		public void SetResponseGameObject( GameObject obj )
 		{
 			responseGameObject = obj;
+
+			Debug.Log( "Current Selection : " + obj.name );
+		}
+
+		public void CheckForProximityError()
+		{
+			var currentTargetStar = currentLevelStars[ levelLayoutCount ].GetComponent<Star>();
+			var selectedStar = responseGameObject.GetComponent<Star>();
+
+			Debug.Log( "Current Proximity List : " + currentTargetStar.ProximityStars.Count );
+
+			for( int i = 1; i < 6; i++  )
+			{
+                if( selectedStar.Uid == currentTargetStar.ProximityStars[i].GetComponent<Star>().Uid )
+				{
+					playerSelection.ProximityError = 1;
+					Debug.Log( "Proximity Error" );
+				}
+			}
 		}
 
 		public void DistanceFromTarget( )
@@ -215,10 +236,10 @@ namespace StarRacer
 			playerSelection.Correct = correct;
 		}
 
-		// public void SetProximityError( int proximityError )
-		// {
-		// 	session.ProximityError = proximityError;
-		// }
+		public void SetProximityError( int proximityError )
+		{
+			playerSelection.ProximityError = proximityError;
+		}
 
 		// public void SetPerservativeError( int perservativeError )
 		// {

@@ -15,6 +15,7 @@ namespace StarRacer
 		
 		[SerializeField] private float proximityRadius;
 		[SerializeField] private string uid;
+		public string Uid { get{ return uid; } set{ uid = value; } }
 		
 		[SerializeField] private TextMeshPro numberText;
 		public TextMeshPro NumberText { get{ return numberText; } set{ numberText = value; } }
@@ -30,6 +31,7 @@ namespace StarRacer
 		[SerializeField] private SpriteRenderer starSpriteRenderer;
 		[SerializeField] private Color[] starColours;
 		[SerializeField] private List<Collider2D> proximityStars;
+		[SerializeField] public List<Collider2D> ProximityStars { get{ return proximityStars; } set{ proximityStars = value; } }
 
 		[SerializeField] private TextMeshPro starText;
 
@@ -39,8 +41,7 @@ namespace StarRacer
 
 		//public float StarPosX { get{} set{} }
 		public float StarPosY;
-
-		private void Start()
+    	private void Start()
 		{
 			SetCameraBounds();
 			_transform = transform;	
@@ -170,6 +171,8 @@ namespace StarRacer
 			SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.SetCorrect( 0 );
+
+			SessionManager.Instance.CheckForProximityError();
 			
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
@@ -201,6 +204,14 @@ namespace StarRacer
 			
 			proximityStars.Clear();
 			proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );	
+		}
+
+		private void CheckForProximityError(  )
+		{
+			for( int i = 0; i < 5; i++ )
+			{
+				
+			}
 		}
 	}
 }
