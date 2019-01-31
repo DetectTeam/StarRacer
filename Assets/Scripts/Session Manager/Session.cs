@@ -9,6 +9,7 @@ namespace StarRacer
 
 	public class StarInfo
 	{
+		public string StarName { get; set; }
 		public float Location_X { get; set; }
 		public float Location_Y { get; set; }
 		//public string Colour { get; set; }
@@ -57,7 +58,7 @@ namespace StarRacer
 	//	public int TransitionCount { get; set; }
 		//public  List<Transition> transitions = new List<Transition>(); //Number of transitions that occured during a session
     	public string FileName { get; set; }
-		public List<PlayerSelection> playerSelection = new List<PlayerSelection>(); 
-		public List<StarInfo> starInfo = new List<StarInfo>(); 
+		public List<PlayerSelection> PlayerSelection = new List<PlayerSelection>(); 
+		public List<StarInfo> StarInfo = new List<StarInfo>(); 
 	}
 }

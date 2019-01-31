@@ -41,6 +41,9 @@ namespace StarRacer
 		[SerializeField] private int colourCode = 1;
 		public int Colourcode { get{ return colourCode; } set{ colourCode = value; } }
 
+		private string starName;
+		public string StarName { get{ return starName; } set{ starName = value; } }
+
 		[SerializeField] private string distractor;
 
 		//public float StarPosX { get{} set{} }

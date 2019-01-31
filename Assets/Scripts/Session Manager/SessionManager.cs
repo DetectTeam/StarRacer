@@ -133,12 +133,19 @@ namespace StarRacer
 
 		public void CheckForProximityError()
 		{
+			int count = 0;
 			var currentTargetStar = currentLevelStars[ levelLayoutCount ].GetComponent<Star>();
 			var selectedStar = responseGameObject.GetComponent<Star>();
 
 			Debug.Log( "Current Proximity List : " + currentTargetStar.ProximityStars.Count );
 
-			for( int i = 1; i < 6; i++  )
+			if( currentTargetStar.ProximityStars.Count >= 6 )
+				count = 6;
+			else
+				count = currentTargetStar.ProximityStars.Count;
+
+
+			for( int i = 1; i < count; i++  )
 			{
                 if( selectedStar.Uid == currentTargetStar.ProximityStars[i].GetComponent<Star>().Uid )
 				{
@@ -166,8 +173,7 @@ namespace StarRacer
 		public void EndSelection()
 		{
 			Debug.Log( "Selection Ending" );
-			session.playerSelection.Add( playerSelection );
-		
+			session.PlayerSelection.Add( playerSelection );
 		}
 
 		public void SetStartTime(  )
@@ -227,8 +233,7 @@ namespace StarRacer
 	
 		public void EndSession()
 		{
-			
-			
+
 			CleanUp();
 			Debug.Log( "Ending Session" );
 			//Get the duration of the session
@@ -239,6 +244,14 @@ namespace StarRacer
 			
 			//Save the session
 			PersistenceManager.Instance.Save( session );
+			
+			string jsonString = JsonConvert.SerializeObject( session );
+
+			Debug.Log( jsonString );
+			
+			FileUploadHandler.Instance.PUT( jsonString );
+			
+			SessionCompleted( true );
 		}
 	
 		public void SessionCompleted( bool b )
@@ -261,12 +274,13 @@ namespace StarRacer
 		{
 			//var star = starObj.GetComponent<Star>();
 			StarInfo starInfo = new StarInfo();
-			
+
+			starInfo.StarName = star.StarName;
 			starInfo.Location_X = star.StarPositionX;
 			starInfo.Location_Y = star.StarPositionY;
 			starInfo.ColourCode = star.Colourcode;
 
-			session.starInfo.Add( starInfo );
+			session.StarInfo.Add( starInfo );
 		}
 
 		public void SetStarInfo( float x, float y, int colourCode )
@@ -277,7 +291,7 @@ namespace StarRacer
 			starInfo.Location_Y = y;
 			starInfo.ColourCode = colourCode;
 
-			session.starInfo.Add( starInfo );
+			session.StarInfo.Add( starInfo );
 		}
 
 	}
