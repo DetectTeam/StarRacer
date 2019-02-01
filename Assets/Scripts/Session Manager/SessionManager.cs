@@ -21,15 +21,22 @@ namespace StarRacer
 
 		//[SerializeField] private string deviceName;
 		[SerializeField] private string deviceModel;
+
 		[SerializeField] private string deviceName;
+
 		[SerializeField] private string deviceType;
+
 		[SerializeField] private string deviceUniqueIdentifier;
+
 		[SerializeField] private string sessionDuration;
 		public string SessionDuration { get{ return sessionDuration; } set{ sessionDuration = value; }  }
+
 		[SerializeField] private List<string> levelLayout = new List<string>();
 		public List<string> LevelLayout { get{ return levelLayout; } set{ levelLayout = value; } }
+
 		[SerializeField] private List<Star> currentLevelStars = new List<Star>();
 		public List<Star> CurrentLevelStars { get{ return currentLevelStars; } set{ currentLevelStars = value; } }
+
 		[SerializeField] private int levelLayoutCount = 0;
 
 		public int LevelLayoutCount { get{ return levelLayoutCount; } set{ levelLayoutCount = value; } }
@@ -56,7 +63,9 @@ namespace StarRacer
 		[SerializeField] private string timeToStartSession;
 
 		public string TimeToStartSession { get{ return timeToStartSession; } set{ 
+
 			timeToStartSession = value; 
+
 			if( timeToStartSession.Length > 0 )
 			{
 				session.TimeToStartSession = timeToStartSession;
@@ -79,22 +88,17 @@ namespace StarRacer
 		{
 			Debug.Log( "Creating new Session...." );
 
-		
-			
 			sessionUid = System.Guid.NewGuid().ToString();
 
 			session =  new Session();
 			session.SessionID = sessionUid;
-
-			session.DeviceType = deviceType;
-			session.DeviceModel = deviceModel;
-			session.DeviceName = deviceName;
-			session.DeviceUniqueIdentifier = deviceUniqueIdentifier;
-			
-			session.PlayerID = deviceUniqueIdentifier;
+			session.DeviceType = SystemInfo.deviceType.ToString();
+			session.DeviceModel = SystemInfo.deviceModel;
+			session.DeviceName = SystemInfo.deviceName;
+			session.DeviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
+			session.PlayerID = SystemInfo.deviceUniqueIdentifier;
 			session.Date =  string.Format("{0:dd-MM-yyyy}", System.DateTime.Now ); 
 			session.TimeStamp = System.DateTime.Now.ToString();
-			
 			session.SessionDuration = sessionDuration;
 			session.SessionName = "trail_maker_session_" +  sessionUid;
 			session.SessionNumber = 22;
@@ -185,8 +189,10 @@ namespace StarRacer
 		public void CalculateRelativeTime( float timeElapsed )
 		{
 			tmpTime = tmpTime + timeElapsed;
+			
+			playerSelection.RT = ( float ) Math.Round ( ( timeElapsed - playerSelection.Relative_Time_Of_Response ) * 1000, 0 );
 			playerSelection.Relative_Time_Of_Response = ( float ) Math.Round (  tmpTime * 1000, 0);
-			playerSelection.RT = ( float ) Math.Round ( timeElapsed * 1000, 0 );
+			
 		}
 
 		public void SetHardCodedOrRandomized( int hardCodedOrRandomized )
