@@ -31,7 +31,6 @@ namespace StarRacer
 		[SerializeField] private bool isButtonPressed = true;
 		public bool IsButtonPressed { get{ return isButtonPressed; } set{ isButtonPressed = value; } }
  
-
 		void Awake()
 		{
 			if( Instance == null )
@@ -46,15 +45,6 @@ namespace StarRacer
 			//DontDestroyOnLoad( gameObject );
 		}
 
-		private void Start()
-		{
-			//previousStar = -1;
-
-			//previousStarObject = firstStar;
-			//LoadRandomLevel();	
-		}
-
-
 		private void Update()
 		{
 			if( isButtonPressed )
@@ -63,7 +53,6 @@ namespace StarRacer
 				//Debug.Log( timeElapsedBetweenPresses );
 			}
 		}
-
 
 		public void  DisableStars()
 		{
@@ -77,11 +66,7 @@ namespace StarRacer
 
 		private IEnumerator IELoadRandomLevel()
 		{
-			// if( !isFirstRun  )
-			// 	Messenger.Broadcast( "Disable" );
-
-			//yield return new WaitForSeconds( 1.0f );
-
+		
 			//Create new session	
 			SessionManager.Instance.SetStartTime( );
 			SessionManager.Instance.SetHardCodedOrRandomized( 1 );
@@ -134,6 +119,7 @@ namespace StarRacer
 			{
 				star.gameObject.name = "Star_" + count; 
 				star.NumberText.text = count.ToString();
+				star.StarName = letterLevel[ count -1 ].ToString();
 				SessionManager.Instance.LevelLayout.Add( count.ToString()  );
 			}	
 
