@@ -41,8 +41,6 @@ namespace StarRacer
 
 		[SerializeField] private GameObject responseGameObject;
 
-		private Coroutine timer;
-
 		public void Awake()
 		{
 			if (_instance != null && _instance != this)
@@ -183,20 +181,14 @@ namespace StarRacer
 		private float tmpTime; 
 		public void CalculateRelativeTime( float timeElapsed )
 		{
-			tmpTime += timeElapsed;
-			playerSelection.Relative_Time_Of_Response += ( tmpTime * 1000 );
+			tmpTime = tmpTime + timeElapsed;
+			playerSelection.Relative_Time_Of_Response = ( float ) Math.Round (  tmpTime * 1000, 0);
 			
 		}
 
-		public void CalculateRT()
+		public void CalculateRT( float timeElapsed )
 		{
-			playerSelection.RT = ( timeElapsed * 1000 );
 			
-			tmpTime += playerSelection.RT;
-
-			playerSelection.Relative_Time_Of_Response = tmpTime;
-
-			timeElapsed = 0;
 		}
 
 		public void SetHardCodedOrRandomized( int hardCodedOrRandomized )
@@ -306,26 +298,7 @@ namespace StarRacer
 			session.StarInfo.Add( starInfo );
 		}
 
-		public void StartTimer()
-		{
-			timer = StartCoroutine( RecordTime() );
-		}
+		
 
-		public void StopTimer()
-		{
-			
-			if( timer != null )
-				StopCoroutine( timer );
-		}
-
-		[SerializeField] private float timeElapsed;
-		private IEnumerator RecordTime ( )
-		{
-			while( true )
-			{
-				yield return new WaitForSeconds( 0.1f );
-				timeElapsed += 0.1f;
-			}
-		}
 	}
 }
