@@ -147,7 +147,7 @@ public class FileUploadHandler : MonoBehaviour
 		//Return a valid filepath for various devices...
 	private static string GetPath()
 	{
-	
+
 		#if UNITY_EDITOR
 			return Application.dataPath + "/";
  		#elif UNITY_ANDROID
@@ -173,8 +173,4 @@ public class FileUploadHandler : MonoBehaviour
 			Debug.Log( "Directory exists . We are good to go :)" );
 		}
 	}
-
-
-
-
 }

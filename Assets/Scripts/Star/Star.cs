@@ -115,13 +115,15 @@ namespace StarRacer
 		[SerializeField] private int touchCount = 0;
 
 		private void OnMouseDown()
-		{
-			StarManager.Instance.IsButtonPressed = false;
-			
+		{	
+			SessionManager.Instance.StopTimer();
+
 			SessionManager.Instance.CreateSelection();
 
-			SessionManager.Instance.CalculateRelativeTime( StarManager.Instance.TimeElapsedBetweenPresses );
-
+			SessionManager.Instance.CalculateRT();
+			
+			SessionManager.Instance.StartTimer();
+		
 			SessionManager.Instance.SetTargetStar();
 
 			if( starText )
@@ -146,7 +148,7 @@ namespace StarRacer
 
 			StarManager.Instance.LastStarSelected = this.gameObject;
 
-			StarManager.Instance.IsButtonPressed = true;
+			
 		}
 
 		private void CorrectSelection()

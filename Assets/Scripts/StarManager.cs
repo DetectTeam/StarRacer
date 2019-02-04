@@ -45,15 +45,6 @@ namespace StarRacer
 			//DontDestroyOnLoad( gameObject );
 		}
 
-		private void Update()
-		{
-			if( isButtonPressed )
-			{
-				timeElapsedBetweenPresses = timeElapsedBetweenPresses + Time.deltaTime;
-				//Debug.Log( timeElapsedBetweenPresses );
-			}
-		}
-
 		public void  DisableStars()
 		{
 			Messenger.Broadcast( "Disable" );
