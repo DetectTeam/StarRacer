@@ -184,13 +184,13 @@ namespace StarRacer
 		public void CalculateRelativeTime( float timeElapsed )
 		{
 			tmpTime += timeElapsed;
-			playerSelection.Relative_Time_Of_Response += ( tmpTime * 1000 );
+			playerSelection.Relative_Time_Of_Response += (float) Math.Round( ( tmpTime * 1000 ), 2);
 			
 		}
 
 		public void CalculateRT()
 		{
-			playerSelection.RT = ( timeElapsed * 1000 );
+			playerSelection.RT = (float) Math.Round( ( timeElapsed * 1000 ), 2 );
 			
 			tmpTime += playerSelection.RT;
 
