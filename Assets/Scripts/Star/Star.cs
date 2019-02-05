@@ -29,6 +29,7 @@ namespace StarRacer
 		public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
 		
 		[SerializeField] private SpriteRenderer starSpriteRenderer;
+		public SpriteRenderer StarSpriteRenderer { get{ return starSpriteRenderer; } set{ starSpriteRenderer = value; } }
 		[SerializeField] private Color[] starColours;
 		[SerializeField] private List<Collider2D> proximityStars;
 		[SerializeField] public List<Collider2D> ProximityStars { get{ return proximityStars; } set{ proximityStars = value; } }
@@ -65,7 +66,7 @@ namespace StarRacer
 			uid = CreateUID();
 			FindPositionToSpawn();
 
-			starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
+			//starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
 
 			starText = transform.Find( "StarText" ).GetComponent<TextMeshPro>();
 
