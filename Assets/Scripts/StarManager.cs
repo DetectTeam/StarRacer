@@ -108,6 +108,7 @@ namespace StarRacer
 				star.gameObject.name = "Star_" + letterLevel[ count-1 ]; 
 				star.NumberText.text = letterLevel[ count-1 ].ToString();
 				star.StarName = letterLevel[ count -1 ].ToString();
+				star.IsLetter = true;
 				SessionManager.Instance.LevelLayout.Add( letterLevel[ count-1 ].ToString() );
 
 			}
@@ -116,6 +117,7 @@ namespace StarRacer
 				star.gameObject.name = "Star_" + count; 
 				star.NumberText.text = count.ToString();
 				star.StarName = letterLevel[ count -1 ].ToString();
+				star.IsLetter = false;
 				SessionManager.Instance.LevelLayout.Add( count.ToString()  );
 			}	
 

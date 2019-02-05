@@ -184,8 +184,7 @@ namespace StarRacer
 		public void CalculateRelativeTime( float timeElapsed )
 		{
 			tmpTime += timeElapsed;
-			playerSelection.Relative_Time_Of_Response += (float) Math.Round( ( tmpTime * 1000 ), 2);
-			
+			playerSelection.Relative_Time_Of_Response += (float) Math.Round( ( tmpTime * 1000 ), 2);	
 		}
 
 		public void CalculateRT()
@@ -235,13 +234,46 @@ namespace StarRacer
 		}
 
 
+		//Seperate into seperate class
+		[SerializeField] private Star previousStar;
+		public Star PreviousStar { get{ return previousStar; } set{ previousStar = value; } }
+
+		[SerializeField] private Star currentStar;
+
+		public Star CurrentStar{ get{ return currentStar; } set{ currentStar = value; } }
+
+		public void CheckForPreservativeError()
+		{
+			if( previousStar != null )
+			{
+				Debug.Log( "PREVIOUS STAR VALUE: " + previousStar.StarValue );
+				Debug.Log( "Current Star Value: " + currentStar.StarValue.Length );
+				
+				//Get Current star
+				char previousStarC = previousStar.StarValue[0];
+				char currentStarC = currentStar.StarValue[0];
+
+				var nextChar = (char)(((int) previousStarC ) + 1);
+
+				if( nextChar == currentStarC )
+				{
+					Debug.Log( "PROXIMITY ERROR" );
+				}
+				else
+				{
+					Debug.Log( "NO PROXIMITY ERROR" );
+				}
+			}
+		}
+
+		//Seperate ends
+
+
 		// public void SetPerservativeError( int perservativeError )
 		// {
 		// 	session.PreservativeError = perservativeError;
 		// }
 
-	
-		
 
 		public void EndSession()
 		{

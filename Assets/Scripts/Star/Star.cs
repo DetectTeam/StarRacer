@@ -10,6 +10,8 @@ namespace StarRacer
 	{
 		private Transform _transform;
 
+		public bool IsLetter { get; set; }
+
 		[SerializeField] private int orderIndex;
 		public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
 		
@@ -36,6 +38,8 @@ namespace StarRacer
 
 		[SerializeField] private TextMeshPro starText;
 
+		public string StarValue { get { return starText.text; } }
+
 		[SerializeField] private float starPosX, starPosY;
 		public float StarPositionX { get{ return starPosX; } set{ starPosX = value; } }
 		public float StarPositionY { get{ return starPosY; } set{ starPosY = value; } }
@@ -47,8 +51,6 @@ namespace StarRacer
 
 		[SerializeField] private string distractor;
 
-		//public float StarPosX { get{} set{} }
-		//public float StarPosY;
     	private void Start()
 		{
 			SetCameraBounds();
@@ -127,6 +129,10 @@ namespace StarRacer
 		
 			SessionManager.Instance.SetTargetStar();
 
+			SessionManager.Instance.CurrentStar = gameObject.GetComponent<Star>();
+
+
+
 			if( starText )
 				SessionManager.Instance.SetResponse( starText.text );
 
@@ -149,7 +155,7 @@ namespace StarRacer
 
 			StarManager.Instance.LastStarSelected = this.gameObject;
 
-			
+	
 		}
 
 		private void CorrectSelection()
@@ -170,7 +176,11 @@ namespace StarRacer
 			//pass the next starcount
 			Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
 
+
+			SessionManager.Instance.PreviousStar = gameObject.GetComponent<Star>();
+
 			GetComponent<Collider2D>().enabled = false;	
+			
 		}
 
 		private void IncorrectSelection()
@@ -180,6 +190,9 @@ namespace StarRacer
 			SessionManager.Instance.SetCorrect( 0 );
 
 			SessionManager.Instance.CheckForProximityError();
+			
+			if( IsLetter )
+				SessionManager.Instance.CheckForPreservativeError();
 			
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
