@@ -183,6 +183,7 @@ namespace StarRacer
 			
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
+			StartCoroutine( TempDisableButton() );
 			Messenger.Broadcast( "SubtractTime" );
 		}
 
@@ -211,6 +212,13 @@ namespace StarRacer
 			
 			proximityStars.Clear();
 			proximityStars = ProximityHandler.Instance.FindProximityStars( gameObject.transform, radius );	
+		}
+
+		private IEnumerator TempDisableButton()
+		{
+			GetComponent<Collider2D>().enabled = false;	
+			yield return new WaitForSeconds( 1.25f );
+			GetComponent<Collider2D>().enabled = true;	
 		}
 
 	}
