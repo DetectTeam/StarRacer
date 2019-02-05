@@ -174,9 +174,12 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-	public void StartGame()
+	[SerializeField] private string levelToLoad;
+
+	public void LoadLevel()
 	{
-		SceneManager.LoadScene( "Trail_Making_Test_Part_A" );
+		if( levelToLoad.Length > 0 )
+			SceneManager.LoadScene( levelToLoad );
 	}
 
 	//Keep Track of player score
