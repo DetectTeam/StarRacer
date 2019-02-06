@@ -140,8 +140,8 @@ namespace StarRacer
 		{
 			StopCoroutine( "CountDown" );
 			Debug.Log( "Time Taken : " +  timeTaken );
-			sessionManager.SessionDuration = timeTaken.ToString();
-			Debug.Log( "Time Taken  Session: " +  sessionManager.SessionDuration );
+			//sessionManager.SessionDuration = timeTaken.ToString();
+			//Debug.Log( "Time Taken  Session: " +  sessionManager.SessionDuration );
 			isTimerRunning  = false;
 		}
 

@@ -86,9 +86,11 @@ public class GameManager : MonoBehaviour
 		if( istutorial )
 		{
 			scoreLimit = tutScoreLimit;
+			m_hasLevelStarted = true;
 		}
 		
 		StartCoroutine( "RunGameLoop" );
+		
 	}
 
 
@@ -146,6 +148,7 @@ public class GameManager : MonoBehaviour
             // pause one frame
             yield return null;
 
+		
             // check for level win condition
             m_isGameOver = IsWinner();
 
@@ -156,7 +159,7 @@ public class GameManager : MonoBehaviour
 	//Game Clean Up
 	IEnumerator EndLevelRoutine()
 	{
-		
+		Debug.Log( "End Level Routine...." );
 		yield return new WaitForSeconds( 0.6f );
 		// run events when we end the level
         if (endLevelEvent != null)
@@ -198,6 +201,12 @@ public class GameManager : MonoBehaviour
 		{
 			return false;
 		}
+	}
+
+	public void CheckForWin()
+	{
+		if( score == scoreLimit )
+			Debug.Log( "Win!!!" );
 	}
 
 

@@ -83,7 +83,7 @@ namespace StarRacer
 
 			sessionUid = System.Guid.NewGuid().ToString();
 
-			session =  new Session();
+			session = new Session();
 			session.SessionID = sessionUid;
 
 			session.DeviceType = deviceType;
@@ -106,7 +106,7 @@ namespace StarRacer
 		public void SetTargetStar( )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
-			SetTargetResponseLocation();
+			//SetTargetResponseLocation();
 		}
 
 		public void SetTargetResponseLocation( )
@@ -279,13 +279,9 @@ namespace StarRacer
 
 		public void EndSession()
 		{
-
 			CleanUp();
 			Debug.Log( "Ending Session" );
-			//Get the duration of the session
-			//session.SessionDuration = sessionDuration;
-			//Debug.Log( session );
-
+		
 			tmpTime = 0;
 			
 			//Save the session
@@ -293,8 +289,6 @@ namespace StarRacer
 			
 			string jsonString = JsonConvert.SerializeObject( session );
 
-			Debug.Log( jsonString );
-			
 			FileUploadHandler.Instance.PUT( jsonString );
 			
 			SessionCompleted( true );

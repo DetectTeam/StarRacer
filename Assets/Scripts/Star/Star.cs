@@ -8,6 +8,9 @@ namespace StarRacer
 {
 	public class Star : MonoBehaviour 
 	{
+		
+		[SerializeField] private bool isTutorial;
+		
 		private Transform _transform;
 
 		public bool IsLetter { get; set; }
@@ -15,17 +18,14 @@ namespace StarRacer
 		[SerializeField] private int orderIndex;
 		public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
 		
-		[SerializeField] private float proximityRadius;
+		
 		[SerializeField] private string uid;
 		public string Uid { get{ return uid; } set{ uid = value; } }
 		
 		[SerializeField] private TextMeshPro numberText;
 		public TextMeshPro NumberText { get{ return numberText; } set{ numberText = value; } }
 		
-		[SerializeField] private float vertExtent;
-		[SerializeField] private float horzExtent;
-		[SerializeField] private Collider2D[] hits;
-		[SerializeField] private bool isValidPosition;
+		
 		
 		[SerializeField] private bool isCorrect;
 		public bool IsCorrect { get{ return isCorrect; } set{ isCorrect = value; } }
@@ -53,7 +53,7 @@ namespace StarRacer
 
     	private void Start()
 		{
-			SetCameraBounds();
+			
 			_transform = transform;	
 		}
 
@@ -63,10 +63,10 @@ namespace StarRacer
 			Messenger<int>.AddListener( "NextStar", NextStar );
 			Messenger.AddListener( "ProximityCheck" , FindProximityStars );
 			
-			SetCameraBounds();
+		
 			_transform = transform;
 			uid = CreateUID();
-			FindPositionToSpawn();
+			
 
 			//starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
 
@@ -91,28 +91,6 @@ namespace StarRacer
 		private string CreateUID()
 		{
 			return System.Guid.NewGuid().ToString();
-		}
-
-		private void FindPositionToSpawn()
-		{
-			isValidPosition = false;
-
-			while( !isValidPosition )
-			{
-				_transform.position = GetRandomPosition();
-
-				hits = Physics2D.OverlapCircleAll( transform.position, proximityRadius );
-
-				if( hits.Length <= 1 )
-				{
-					isValidPosition = true;
-				}
-			}	
-		}
-
-		private Vector3 GetRandomPosition()
-		{
-			return new Vector3( Random.Range( -horzExtent, horzExtent ), Random.Range( -vertExtent, vertExtent - 3 ), _transform.position.z  ) ;
 		}
 
 		[SerializeField] private int touchCount = 0;
@@ -153,9 +131,8 @@ namespace StarRacer
 
 			SessionManager.Instance.EndSelection();
 
-			StarManager.Instance.LastStarSelected = this.gameObject;
+			//StarManager.Instance.LastStarSelected = this.gameObject;
 
-	
 		}
 
 		private void CorrectSelection()
@@ -170,11 +147,20 @@ namespace StarRacer
 			GetComponent<StarFxHandler>().ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
 			isCorrect = false;
 
-			Messenger.Broadcast( "UpdateScore" );
-			Messenger.Broadcast( "AddTime" );
+			
+			Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
+
+			if( isTutorial )
+				GameManager.Instance.Score ++;
+			
+			if( !isTutorial )
+			{
+				Messenger.Broadcast( "UpdateScore" );
+				Messenger.Broadcast( "AddTime" );
+			}
 			//Broadcast message to all stars
 			//pass the next starcount
-			Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
+			
 
 
 			SessionManager.Instance.PreviousStar = gameObject.GetComponent<Star>();
@@ -199,15 +185,11 @@ namespace StarRacer
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
 			StartCoroutine( TempDisableButton() );
-			Messenger.Broadcast( "SubtractTime" );
+			
+			if( !isTutorial )
+				Messenger.Broadcast( "SubtractTime" );
 		}
 
-		private void SetCameraBounds()
-		{
-			vertExtent = Camera.main.orthographicSize - 2;    
-			horzExtent = ( vertExtent * Screen.width / Screen.height );
-			horzExtent = horzExtent - 1;
-		}
 
 		private void Disable()
 		{	
