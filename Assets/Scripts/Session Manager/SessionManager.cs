@@ -223,7 +223,7 @@ namespace StarRacer
 		// 	session.Target_Distractor = targetDistractor;
 		// }
 
-		 public void SetResponse(string response )
+		public void SetResponse(string response )
 		{
 			playerSelection.Response = response;
 	 	}
@@ -257,12 +257,12 @@ namespace StarRacer
 
 				if( nextChar == currentStarC )
 				{
-					Debug.Log( "PROXIMITY ERROR" );
+					Debug.Log( "PRESERVATIVE ERROR" );
 					playerSelection.PreservativeError =  1;
 				}
 				else
 				{
-					Debug.Log( "NO PROXIMITY ERROR" );
+					Debug.Log( "NO PRESERVATIVE ERROR" );
 					playerSelection.PreservativeError =  0;
 				}
 			}

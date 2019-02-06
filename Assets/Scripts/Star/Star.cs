@@ -10,10 +10,11 @@ namespace StarRacer
 	{
 		
 		[SerializeField] private bool isTutorial;
+		[SerializeField] private bool isLetter;
 		
 		private Transform _transform;
 
-		public bool IsLetter { get; set; }
+		public bool IsLetter { get{ return isLetter;  } set{ isLetter = value; } }
 
 		[SerializeField] private int orderIndex;
 		public int OrderIndex { get{ return orderIndex; } set{ orderIndex = value; } }
@@ -75,6 +76,7 @@ namespace StarRacer
 			starPosX = transform.position.x;
 			starPosY = transform.position.y;
 
+			if(SessionManager.Instance)
 			SessionManager.Instance.SetStarInfo( gameObject.GetComponent<Star>() );
 			//SessionManager.Instance.SetStarInfo( starPosX, starPosY, colourCode );
 			//GetComponent<Collider2D>().enabled = true;
