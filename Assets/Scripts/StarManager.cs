@@ -7,19 +7,31 @@ namespace StarRacer
 	public class StarManager : MonoBehaviour 
 	{		
 		public static StarManager Instance = null;
+
 		public Star firstStar;
+
 		public static int score = 0;
+
 		public static int previousStar;
+
 		public static Star previousStarObject;
+
 		//public int PreviousStar { get{ return previousStar; } set{ previousStar = value; Debug.Log( previousStar ); } }
 		//Records the number of points of the line the last time the player selected the correct number
 		public static int lastSuccessPointCount = 0; 
+
 		[SerializeField] private int delay;
+
 		[SerializeField] private int starCount;
+
 		[SerializeField] private float vertExtent;
+
 		[SerializeField] private float horzExtent;
+
 		[SerializeField] private bool isLetter;
+
 		[SerializeField] private string[] letterLevel;
+
 		[SerializeField] private bool isFirstRun = true;
 
 		[SerializeField] private GameObject lastStarSelected;
@@ -62,6 +74,7 @@ namespace StarRacer
 		
 			//Create new session	
 			SessionManager.Instance.SetStartTime( );
+
 			SessionManager.Instance.SetHardCodedOrRandomized( 1 );
 			//SessionManager.Instance.SetLevel( );
 			
@@ -127,7 +140,6 @@ namespace StarRacer
 			star.gameObject.SetActive( true );
 
 			SessionManager.Instance.CurrentLevelStars.Add( star );
-			
 			
 			count ++;
 			

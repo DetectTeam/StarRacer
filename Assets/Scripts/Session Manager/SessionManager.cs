@@ -258,10 +258,12 @@ namespace StarRacer
 				if( nextChar == currentStarC )
 				{
 					Debug.Log( "PROXIMITY ERROR" );
+					playerSelection.PreservativeError =  1;
 				}
 				else
 				{
 					Debug.Log( "NO PROXIMITY ERROR" );
+					playerSelection.PreservativeError =  0;
 				}
 			}
 		}

@@ -191,6 +191,8 @@ namespace StarRacer
 
 			SessionManager.Instance.CheckForProximityError();
 			
+			Debug.Log( "Letter is: " + IsLetter );
+
 			if( IsLetter )
 				SessionManager.Instance.CheckForPreservativeError();
 			
