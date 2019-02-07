@@ -17,8 +17,8 @@ public class FileUploadHandler : MonoBehaviour
 
 	private string jsonString;
 
-	//private static readonly string PutSessionURL = "https://murmuring-fortress-76588.herokuapp.com/api/starracer/session";
-	private static readonly string PutSessionURL = "http://localhost:5000/api/starracer/session";
+	private static readonly string PutSessionURL = "https://murmuring-fortress-76588.herokuapp.com/api/starracer/session";
+	//private static readonly string PutSessionURL = "http://localhost:5000/api/starracer/session";
 
 	private void Awake()
 	{

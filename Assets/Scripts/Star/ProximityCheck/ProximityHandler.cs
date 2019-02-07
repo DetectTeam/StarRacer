@@ -18,7 +18,7 @@ public class ProximityHandler : MonoBehaviour
 		}
 	}
 
-	public  List<Collider2D> FindProximityStars( Transform objTransform, float radius )
+	public List<Collider2D> FindProximityStars( Transform objTransform, float radius )
 	{
 		Collider2D[] hits = null;
 		

@@ -101,12 +101,14 @@ namespace StarRacer
 			
 			PersistenceManager.Instance.FileName = "test.dat";
 			session.FileName = session.SessionName + ".dat";
+
+			session.Hard_Coded_Or_Randomized = "Hard Coded";
 		}
 
 		public void SetTargetStar( )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
-			//SetTargetResponseLocation();
+			SetTargetResponseLocation();
 		}
 
 		public void SetTargetResponseLocation( )

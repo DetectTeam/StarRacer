@@ -47,7 +47,7 @@ namespace StarRacer
 		[SerializeField] private int colourCode = 1;
 		public int Colourcode { get{ return colourCode; } set{ colourCode = value; } }
 
-		private string starName;
+		[SerializeField] private string starName;
 		public string StarName { get{ return starName; } set{ starName = value; } }
 
 		[SerializeField] private string distractor;
@@ -60,10 +60,13 @@ namespace StarRacer
 
 		private void OnEnable()
 		{
+			starName = gameObject.name;
 			Messenger.AddListener( "Disable" , Disable );
 			Messenger<int>.AddListener( "NextStar", NextStar );
 			Messenger.AddListener( "ProximityCheck" , FindProximityStars );
 			
+
+		
 		
 			_transform = transform;
 			uid = CreateUID();
