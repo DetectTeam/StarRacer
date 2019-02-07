@@ -65,9 +65,6 @@ namespace StarRacer
 			Messenger<int>.AddListener( "NextStar", NextStar );
 			Messenger.AddListener( "ProximityCheck" , FindProximityStars );
 			
-
-		
-		
 			_transform = transform;
 			uid = CreateUID();
 			
