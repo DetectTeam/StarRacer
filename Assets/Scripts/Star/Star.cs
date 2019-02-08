@@ -164,7 +164,7 @@ namespace StarRacer
 			if( !isTutorial )
 			{
 				Messenger.Broadcast( "UpdateScore" );
-				Messenger.Broadcast( "AddTime" );
+				//Messenger.Broadcast( "AddTime" );
 			}
 			//Broadcast message to all stars
 			//pass the next starcount
@@ -194,8 +194,8 @@ namespace StarRacer
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
 			StartCoroutine( TempDisableButton() );
 			
-			if( !isTutorial )
-				Messenger.Broadcast( "SubtractTime" );
+			// if( !isTutorial )
+			// 	Messenger.Broadcast( "SubtractTime" );
 		}
 
 

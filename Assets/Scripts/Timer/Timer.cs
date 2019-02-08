@@ -21,7 +21,6 @@ namespace StarRacer
 		public StringBuilder TimeTaken { get { return timeTaken; } }
 		public StringBuilder TimeTakenSeconds{ get { return timeTakenSeconds; } }
 
-
 		private float timeTakenfloat;
 		public float TimeTakenfloat{ get { return timeTakenfloat; } }
 
@@ -76,7 +75,7 @@ namespace StarRacer
 			timerText.enabled = true;
 			DisplayTime( timeLeft );
 
-			yield return new WaitForSeconds( 1.0f );
+			//yield return new WaitForSeconds( 1.0f );
 
 			while( timeLeft > 0 )
 			{
@@ -100,7 +99,7 @@ namespace StarRacer
 			timerText.enabled = true;
 			DisplayTime( displayTime );
 
-			yield return new WaitForSeconds( 1.0f );
+			//yield return new WaitForSeconds( 1.0f );
 
 			while( displayTime < timeLeft )
 			{
@@ -159,6 +158,7 @@ namespace StarRacer
 		//Triggered when game starts
 		public void StartTimer() 
 		{
+			Debug.Log( "Starting Timer" );
 			//isTimerRunning = true;
 			
 			if( isTutorial )
