@@ -9,7 +9,7 @@ namespace StarRacer
 {
 	public class Timer : MonoBehaviour 
 	{
-		
+		[SerializeField] private bool isTutorial;
 		[SerializeField] private bool isTimerRunning = false;
 		[SerializeField] private float startTime;
 
@@ -37,12 +37,16 @@ namespace StarRacer
 		{
 			Messenger.AddListener( "AddTime", AddToTime );
 			Messenger.AddListener( "SubtractTime", SubtractFromTime );
+			Messenger.AddListener( "StartTimer", StartTimer );
+			Messenger.AddListener( "StopTimer", StopTimer );
 		}
 
 		private void  OnDisable()
 		{
 			Messenger.RemoveListener( "AddTime", AddToTime );
 			Messenger.RemoveListener( "SubtractTime", SubtractFromTime );
+			Messenger.RemoveListener( "StartTimer", StartTimer );
+			Messenger.RemoveListener( "StopTimer", StopTimer );
 		}
 
 		
@@ -56,7 +60,7 @@ namespace StarRacer
 				sessionManager = gameManager.GetComponent<SessionManager>();
 
 			timerText = GetComponent<TextMeshProUGUI>();
-			timerText.enabled = false;
+			//timerText.enabled = false;
 
 			minutes = new StringBuilder("");	
 			seconds = new StringBuilder("");
@@ -70,7 +74,7 @@ namespace StarRacer
 		{
 			float count = 0;
 			timerText.enabled = true;
-			DisplayTime();
+			DisplayTime( timeLeft );
 
 			yield return new WaitForSeconds( 1.0f );
 
@@ -81,7 +85,31 @@ namespace StarRacer
 				if( count == 10 )
 				{
 					timeLeft --;
-					DisplayTime();
+					DisplayTime( timeLeft );
+					count = 0;
+				}	
+			}
+
+			Debug.Log( "Game Over" );
+		}
+
+		private IEnumerator CountUp()
+		{
+			float count = 0;
+			float displayTime = 0;
+			timerText.enabled = true;
+			DisplayTime( displayTime );
+
+			yield return new WaitForSeconds( 1.0f );
+
+			while( displayTime < timeLeft )
+			{
+				yield return new WaitForSeconds( 0.1f );
+				count ++;
+				if( count == 10 )
+				{
+					displayTime ++;
+					DisplayTime( displayTime );
 					count = 0;
 				}	
 			}
@@ -89,7 +117,7 @@ namespace StarRacer
 			Debug.Log( "Game Over" );
 		}
 		
-		private void DisplayTime()
+		private void DisplayTime( float timeLeft )
 		{
 				minutes.Clear();
 				seconds.Clear();
@@ -132,14 +160,22 @@ namespace StarRacer
 		public void StartTimer() 
 		{
 			//isTimerRunning = true;
-			StartCoroutine( "CountDown" );
+			
+			if( isTutorial )
+				StartCoroutine( "CountUp" );
+			else
+				StartCoroutine( "CountDown" );
 		}
 
 		//Triggered when player completes a level
 		public void StopTimer()
 		{
-			StopCoroutine( "CountDown" );
-			Debug.Log( "Time Taken : " +  timeTaken );
+			if( isTutorial )
+				StopCoroutine( "CountUp" );
+			else
+				StopCoroutine( "CountDown" );
+
+			//Debug.Log( "Time Taken : " +  timeTaken );
 			//sessionManager.SessionDuration = timeTaken.ToString();
 			//Debug.Log( "Time Taken  Session: " +  sessionManager.SessionDuration );
 			isTimerRunning  = false;
@@ -148,7 +184,7 @@ namespace StarRacer
 		public void AddToTime()
 		{
 			timeLeft = timeLeft + 3.0f;
-			DisplayTime();
+			DisplayTime( timeLeft ) ;
 			PunchScale( timerText.gameObject );
 		}
 
@@ -159,7 +195,7 @@ namespace StarRacer
 			if( timeLeft < 0 )
 				timeLeft = 0;
 				
-			DisplayTime();
+			DisplayTime( timeLeft );
 			ColourFade( timerText.gameObject, timerText.color );
 		}
 

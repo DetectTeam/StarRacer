@@ -47,14 +47,20 @@ namespace StarRacer
 		[SerializeField] private int colourCode = 1;
 		public int Colourcode { get{ return colourCode; } set{ colourCode = value; } }
 
+		[SerializeField] private Color originalColour;
+
+		public Color OriginalColour { get{ return originalColour; } set{ originalColour = value; } }
+
 		[SerializeField] private string starName;
 		public string StarName { get{ return starName; } set{ starName = value; } }
 
 		[SerializeField] private string distractor;
 
+
+
     	private void Start()
 		{
-			
+			originalColour = starSpriteRenderer.color;
 			_transform = transform;	
 		}
 
@@ -218,6 +224,34 @@ namespace StarRacer
 			GetComponent<Collider2D>().enabled = false;	
 			yield return new WaitForSeconds( 1.25f );
 			GetComponent<Collider2D>().enabled = true;	
+		}
+
+		public void TriggerCorrectSelection()
+		{
+			
+			GetComponent<StarFxHandler>().PunchScale( this.gameObject );
+			GetComponent<StarFxHandler>().ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
+		}
+
+		public void TriggerInCorrectSelection()
+		{		
+			GetComponent<StarFxHandler>().Shake( this.gameObject );
+			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );
+		}
+
+		public void DisableCollider( )
+		{
+			gameObject.transform.GetComponent<Collider2D>().enabled = false;
+		}
+
+		public void EnableCollider()
+		{
+			gameObject.transform.GetComponent<Collider2D>().enabled = true;
+		}
+
+		public void ResetColour()
+		{
+			starSpriteRenderer.color = originalColour;
 		}
 
 	}
