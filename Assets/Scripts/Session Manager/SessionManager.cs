@@ -91,7 +91,7 @@ namespace StarRacer
 			session.DeviceName = deviceName;
 			session.DeviceUniqueIdentifier = deviceUniqueIdentifier;
 			
-			session.PlayerID = deviceUniqueIdentifier;
+			session.PlayerID = SystemInfo.deviceUniqueIdentifier;
 			session.Date =  string.Format("{0:dd-MM-yyyy}", System.DateTime.Now ); 
 			session.TimeStamp = System.DateTime.Now.ToString();
 			
@@ -103,6 +103,8 @@ namespace StarRacer
 			session.FileName = session.SessionName + ".dat";
 
 			session.Hard_Coded_Or_Randomized = "Hard Coded";
+
+			SetLevel();
 		}
 
 		public void SetTargetStar( )

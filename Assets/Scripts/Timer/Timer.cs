@@ -101,7 +101,7 @@ namespace StarRacer
 
 			//yield return new WaitForSeconds( 1.0f );
 
-			while( displayTime < timeLeft )
+			while( displayTime < 99999 )
 			{
 				yield return new WaitForSeconds( 0.1f );
 				count ++;
