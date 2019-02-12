@@ -127,7 +127,6 @@ namespace StarRacer
 			playerSelection.Response_Location_Y = ( float ) Math.Round( y, 2 );
 		}
 
-		
 		public void SetResponseGameObject( GameObject obj )
 		{
 			responseGameObject = obj;
@@ -213,19 +212,15 @@ namespace StarRacer
 		private int levelCount;
 		public void SetLevel(  )
 		{
+			if( PlayerPrefs.HasKey( "LevelCount" ) )
+				levelCount = PlayerPrefs.GetInt( "LevelCount" );
+
 			levelCount ++;
+
 			session.Level = levelCount;
+
+			PlayerPrefs.SetInt( "LevelCount", levelCount );
 		}
-
-		// public void SetTargetResponseId( int targetResponseId )
-		// {
-		// 	session.Target_Response_ID = targetResponseId;
-		// }
-
-		// public void SetTargetDistractor( int targetDistractor )
-		// {
-		// 	session.Target_Distractor = targetDistractor;
-		// }
 
 		public void SetResponse(string response )
 		{
@@ -273,13 +268,6 @@ namespace StarRacer
 		}
 
 		//Seperate ends
-
-
-		// public void SetPerservativeError( int perservativeError )
-		// {
-		// 	session.PreservativeError = perservativeError;
-		// }
-
 
 		public void EndSession()
 		{
@@ -345,7 +333,6 @@ namespace StarRacer
 
 		public void StopTimer()
 		{
-			
 			if( timer != null )
 				StopCoroutine( timer );
 		}
@@ -358,6 +345,12 @@ namespace StarRacer
 				yield return new WaitForSeconds( 0.1f );
 				timeElapsed += 0.1f;
 			}
+		}
+
+		private void OnApplicationQuit()
+		{
+			levelCount = 0;
+			PlayerPrefs.SetInt( "LevelCount" , levelCount );
 		}
 	}
 }
