@@ -97,7 +97,7 @@ namespace StarRacer
 			
 			session.SessionDuration = sessionDuration;
 			session.SessionName = "trail_maker_session_" +  sessionUid;
-			session.SessionNumber = 22;
+			session.SessionNumber = sessionUid;
 			
 			PersistenceManager.Instance.FileName = "test.dat";
 			session.FileName = session.SessionName + ".dat";
@@ -209,6 +209,14 @@ namespace StarRacer
 				session.Hard_Coded_Or_Randomized = "Hard";
 		}
 
+		public void SetNumberOrLetter( bool numOrLetter )
+		{
+			if( numOrLetter )
+				session.Number_Letter = "Number_Letter";
+			else
+				session.Number_Letter = "Number";
+		}
+
 		private int levelCount;
 		public void SetLevel(  )
 		{
@@ -230,6 +238,11 @@ namespace StarRacer
 		public void SetCorrect( int correct )
 		{
 			playerSelection.Correct = correct;
+		}
+
+		public void SetTargetDistractor( string targetDistractor )
+		{
+			playerSelection.Target_Distractor = targetDistractor.Trim();
 		}
 
 

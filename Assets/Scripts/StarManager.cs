@@ -80,6 +80,8 @@ namespace StarRacer
 			
 			isLetter = ( Random.value < 0.5f );
 
+			SessionManager.Instance.SetNumberOrLetter( isLetter );
+
 			colourList.ShuffleList();
 
 			for( int x = 0; x < starCount; x++ )
@@ -118,8 +120,23 @@ namespace StarRacer
 			
 			if( isLetter )
 			{
+				
 				star.gameObject.name = "Star_" + letterLevel[ count-1 ]; 
 				star.NumberText.text = letterLevel[ count-1 ].ToString();
+				
+				if( (count - 1) == 0 )
+				{
+					star.Distractor = "NA";
+				}
+				else if( count < letterLevel.Length )
+				{
+					star.Distractor = letterLevel[ count ].ToString();
+				}
+				else if( count  == letterLevel.Length )
+				{
+					star.Distractor = "NA";
+				}
+				
 				star.StarName = letterLevel[ count -1 ].ToString();
 				star.IsLetter = true;
 				SessionManager.Instance.LevelLayout.Add( letterLevel[ count-1 ].ToString() );
@@ -130,6 +147,7 @@ namespace StarRacer
 				star.gameObject.name = "Star_" + count; 
 				star.NumberText.text = count.ToString();
 				star.StarName = letterLevel[ count -1 ].ToString();
+				star.Distractor = "NA";
 				star.IsLetter = false;
 				SessionManager.Instance.LevelLayout.Add( count.ToString()  );
 			}	

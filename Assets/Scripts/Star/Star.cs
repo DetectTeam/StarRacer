@@ -55,8 +55,10 @@ namespace StarRacer
 		public string StarName { get{ return starName; } set{ starName = value; } }
 
 		[SerializeField] private string distractor;
+		public string Distractor { get{ return distractor; } set{ distractor = value; } }
 
-
+		[SerializeField] private string targetDistractorID;
+		public string TargetResponseID { get{ return targetDistractorID; }  set{ value = targetDistractorID; } }
 
     	private void Start()
 		{
@@ -113,15 +115,20 @@ namespace StarRacer
 			
 			SessionManager.Instance.StartTimer();
 		
-			SessionManager.Instance.SetTargetStar();
+			//SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.CurrentStar = gameObject.GetComponent<Star>();
 
-
-
 			if( starText )
+			{
 				SessionManager.Instance.SetResponse( starText.text );
-
+				SessionManager.Instance.SetTargetDistractor( distractor );	
+			}
+			else
+			{
+				SessionManager.Instance.SetTargetDistractor( "NA" );
+			}
+			
 			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
 
 			SessionManager.Instance.SetResponseGameObject( this.gameObject );
@@ -179,7 +186,7 @@ namespace StarRacer
 
 		private void IncorrectSelection()
 		{
-			SessionManager.Instance.SetTargetStar();
+			//SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.SetCorrect( 0 );
 
