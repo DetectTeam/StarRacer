@@ -8,6 +8,8 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour 
 {
+	[SerializeField] private GameObject endLevelScreen;
+	[SerializeField] private GameObject endGameScreen;
 
 	//[SerializeField] private PostProcessingBehaviour blur;
 	//[SerializeField] private PostProcessingBehaviour normal;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] GameObject canvas;
 	[SerializeField] private bool isLevelOver;
 	[SerializeField] private bool istutorial;
+	[SerializeField] private int maxNumOfLevelsPerGame = 8;
 	
 	public static GameManager Instance = null;
 
@@ -50,7 +53,6 @@ public class GameManager : MonoBehaviour
 	public UnityEvent startLevelEvent;
 	public UnityEvent playLevelEvent;
 	public UnityEvent endLevelEvent;
-
 
 	void OnEnable()
 	{
@@ -246,6 +248,24 @@ public class GameManager : MonoBehaviour
 	public void SetScoreLimit( int limit )
 	{
 		scoreLimit = limit;
+	}
+
+	
+	public void CheckForEndOfGame()
+	{
+		if( PlayerPrefs.HasKey( "LevelCount" ) )
+		{
+			int levelCount = PlayerPrefs.GetInt( "LevelCount" );
+
+			if( levelCount >= maxNumOfLevelsPerGame )
+			{
+				endGameScreen.SetActive( true );
+			}
+			else
+			{
+				endLevelScreen.SetActive( true );
+			}
+		}
 	}
 	
 
