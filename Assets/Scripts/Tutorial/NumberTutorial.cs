@@ -126,11 +126,12 @@ namespace StarRacer
 			count++;
 
 			Debug.Log( "Button count: " + count );
-			
+
 			if( count == 4 )
 			{
 				ToggleDialogBox( 0.3f, new Vector3( 0f, -350f, 0f ), new Vector3( 0f, -1500f, 0f ) );
 				Messenger.Broadcast( "StartTimer" );
+				SessionManager.Instance.StartTimer();
 			}
 		}
 
