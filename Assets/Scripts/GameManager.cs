@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-		Messenger.Broadcast( "IncreaseLevel" );
+	
 
 		  // trigger events when we press the StartButton
         if (startLevelEvent != null)

@@ -131,7 +131,7 @@ namespace StarRacer
 		{
 			responseGameObject = obj;
 
-			Debug.Log( "Current Selection : " + obj.name );
+			//Debug.Log( "Current Selection : " + obj.name );
 		}
 
 		public void CheckForProximityError()
@@ -160,7 +160,7 @@ namespace StarRacer
 
 		public void DistanceFromTarget( )
 		{
-			Debug.Log( "Level Layout Count: " +  levelLayoutCount );
+			//Debug.Log( "Level Layout Count: " +  levelLayoutCount );
 			
 			playerSelection.Distance_From_Target = ( float ) Math.Round( Vector2.Distance( responseGameObject.transform.position, currentLevelStars[ levelLayoutCount ].gameObject.transform.position ), 2 );
 			Debug.Log( "Distance : " + playerSelection.Distance_From_Target );
@@ -168,13 +168,13 @@ namespace StarRacer
 
 		public void CreateSelection()
 		{
-			Debug.Log( "Creating new Selection" );
+			//Debug.Log( "Creating new Selection" );
 			playerSelection = new PlayerSelection();	
 		}
 
 		public void EndSelection()
 		{
-			Debug.Log( "Selection Ending" );
+			//Debug.Log( "Selection Ending" );
 			session.PlayerSelection.Add( playerSelection );
 		}
 
@@ -224,7 +224,7 @@ namespace StarRacer
 
 		public void SetResponse(string response )
 		{
-			playerSelection.Response = response;
+			playerSelection.Response = response.Trim();
 	 	}
 
 		public void SetCorrect( int correct )
@@ -245,8 +245,8 @@ namespace StarRacer
 		{
 			if( previousStar != null )
 			{
-				Debug.Log( "PREVIOUS STAR VALUE: " + previousStar.StarValue );
-				Debug.Log( "Current Star Value: " + currentStar.StarValue.Length );
+				//Debug.Log( "PREVIOUS STAR VALUE: " + previousStar.StarValue );
+				//Debug.Log( "Current Star Value: " + currentStar.StarValue.Length );
 				
 				//Get Current star
 				char previousStarC = previousStar.StarValue[0];
