@@ -43,7 +43,7 @@ namespace StarRacer
 						isValidPosition = true;
 				}
 			}
-			Debug.Log( "SEtting new star position...." );
+			//Debug.Log( "SEtting new star position...." );
 			
 			Star star = gameObject.GetComponent<Star>();
 

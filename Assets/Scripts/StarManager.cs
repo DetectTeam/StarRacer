@@ -70,34 +70,59 @@ namespace StarRacer
 		}
 
 		private IEnumerator IELoadRandomLevel()
-		{
-		
-			//Create new session	
-			SessionManager.Instance.SetStartTime( );
+        {
+            //Create new session	
+            SessionManager.Instance.SetStartTime();
 
-			SessionManager.Instance.SetHardCodedOrRandomized( 1 );
-			//SessionManager.Instance.SetLevel( );
-			
-			isLetter = ( Random.value < 0.5f );
+            SessionManager.Instance.SetHardCodedOrRandomized(1);
+            //SessionManager.Instance.SetLevel( );
 
-			SessionManager.Instance.SetNumberOrLetter( isLetter );
+            SetLevelType();
 
-			colourList.ShuffleList();
+            //isLetter = ( Random.value < 0.5f );
 
-			for( int x = 0; x < starCount; x++ )
-			{
-				//AddStarsToPool( 1 );
-				yield return null;
-				CreateStarFromPool();
-			}
-			yield return new WaitForSeconds( 1.0f );
+            SessionManager.Instance.SetNumberOrLetter(isLetter);
 
-			Messenger.Broadcast( "ProximityCheck" );
+            colourList.ShuffleList();
 
-			isFirstRun = false;
-		}
+            for (int x = 0; x < starCount; x++)
+            {
+                //AddStarsToPool( 1 );
+                yield return null;
+                CreateStarFromPool();
+            }
+            yield return new WaitForSeconds(1.0f);
 
-		private void AddStarsToPool( int starCount )
+            Messenger.Broadcast("ProximityCheck");
+
+            isFirstRun = false;
+        }
+
+        private void SetLevelType()
+        {
+            if (PlayerPrefs.HasKey("LevelType"))
+            {
+                int levelType = PlayerPrefs.GetInt("LevelType");
+
+                if (levelType == 1)
+                {
+                    isLetter = true;
+                    PlayerPrefs.SetInt("LevelType", 0);
+                }
+                else
+                {
+                    isLetter = false;
+                    PlayerPrefs.SetInt("LevelType", 1);
+                }
+            }
+            else
+            {
+                isLetter = false;
+                PlayerPrefs.SetInt("LevelType", 1);
+            }
+        }
+
+        private void AddStarsToPool( int starCount )
 		{
 			for( int x = 0; x < starCount; x++ )
 			{
