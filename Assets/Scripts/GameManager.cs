@@ -250,9 +250,8 @@ public class GameManager : MonoBehaviour
 		scoreLimit = limit;
 	}
 
-	
 	public void CheckForEndOfGame()
-	{
+	{	
 		if( PlayerPrefs.HasKey( "LevelCount" ) )
 		{
 			int levelCount = PlayerPrefs.GetInt( "LevelCount" );
@@ -262,11 +261,11 @@ public class GameManager : MonoBehaviour
 				endGameScreen.SetActive( true );
 			}
 			else
-			{
-				endLevelScreen.SetActive( true );
+			{		
+				levelCount++;
+				PlayerPrefs.SetInt( "LevelCount", levelCount );
+				endLevelScreen.SetActive( true );				
 			}
 		}
 	}
-	
-
 }

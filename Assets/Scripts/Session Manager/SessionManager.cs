@@ -104,7 +104,6 @@ namespace StarRacer
 
 			session.Hard_Coded_Or_Randomized = "Hard Coded";
 
-			SetLevel();
 		}
 
 		public void SetTargetStar( bool isLetter )
@@ -227,16 +226,9 @@ namespace StarRacer
 		}
 
 		private int levelCount;
-		public void SetLevel(  )
+		public void SetLevel( int level )
 		{
-			if( PlayerPrefs.HasKey( "LevelCount" ) )
-				levelCount = PlayerPrefs.GetInt( "LevelCount" );
-
-			levelCount ++;
-
-			session.Level = levelCount;
-
-			PlayerPrefs.SetInt( "LevelCount", levelCount );
+			session.Level = level;
 		}
 
 		public void SetResponse(string response )
@@ -372,8 +364,8 @@ namespace StarRacer
 
 		private void OnApplicationQuit()
 		{
-			levelCount = 0;
-			PlayerPrefs.SetInt( "LevelCount" , levelCount );
+			//levelCount = 0;
+			//PlayerPrefs.SetInt( "LevelCount" , levelCount );
 		}
 	}
 }

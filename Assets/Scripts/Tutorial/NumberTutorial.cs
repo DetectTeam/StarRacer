@@ -33,13 +33,14 @@ namespace StarRacer
 			moveDialog = dialogueBox.GetComponent<MoveTo>();
 			
 			StartCoroutine( Tutorial() );
-
-
 		}
 		
 		private IEnumerator Tutorial()
 		{
 			
+			if( SessionManager.Instance )
+				SessionManager.Instance.SetLevel( 1 );
+
 			DisableStarColliders();
 			yield return new WaitForSeconds( 1.0f );
 			StartDialog( 0 );
@@ -139,9 +140,15 @@ namespace StarRacer
 
 		private void ToggleDialogBox( float speed, Vector3 source, Vector3 target )
     	{
-        //Hide Dialogue Box
-        if (moveDialog)
-            moveDialog.Move( speed, source, target );
-    	}		
+        	//Hide Dialogue Box
+        	if (moveDialog)
+            	moveDialog.Move( speed, source, target );
+    	}
+
+		private void SetLevelCount()
+		{
+			if( LevelCounter.Instance )
+				LevelCounter.Instance.LevelCount = 1;
+		}
 	}
 }

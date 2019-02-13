@@ -76,7 +76,7 @@ namespace StarRacer
 
             SessionManager.Instance.SetHardCodedOrRandomized(1);
             //SessionManager.Instance.SetLevel( );
-
+            SetLevelCount();
             SetLevelType();
 
             //isLetter = ( Random.value < 0.5f );
@@ -97,6 +97,24 @@ namespace StarRacer
 
             isFirstRun = false;
         }
+
+        private int levelCount = 5;
+
+		private void SetLevelCount()
+		{
+			if( PlayerPrefs.HasKey( "LevelCount" ) )
+			{
+				levelCount = PlayerPrefs.GetInt( "LevelCount" );
+			}
+			else
+			{
+				PlayerPrefs.SetInt( "LevelCount", levelCount );
+			}
+			
+			SessionManager.Instance.SetLevel( levelCount );
+
+			//PlayerPrefs.SetInt( "LevelCount", levelCount );
+		}
 
         private void SetLevelType()
         {

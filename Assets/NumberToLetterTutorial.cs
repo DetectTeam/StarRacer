@@ -41,6 +41,9 @@ namespace StarRacer
 		{		
 			Messenger.Broadcast( "StopTimer" );
 
+			if( SessionManager.Instance )
+				SessionManager.Instance.SetLevel( 2 );
+
 			DisableStarColliders();
 
 			yield return new WaitForSeconds( 1.0f );
@@ -78,7 +81,6 @@ namespace StarRacer
 				DialogueManager.Instance.StartDialogue( dialogues[ index ] );
 		}
 
-
 		private int count = 0;
 		private void ContinueButtonAction()
 		{
@@ -98,9 +100,15 @@ namespace StarRacer
 
 		private void ToggleDialogBox( float speed, Vector3 source, Vector3 target )
     	{
-        //Hide Dialogue Box
-        if (moveDialog)
-            moveDialog.Move( speed, source, target );
+       	 	//Hide Dialogue Box
+        	if (moveDialog)
+            	moveDialog.Move( speed, source, target );
     	}
+
+		private void SetLevelCount()
+		{
+			if( LevelCounter.Instance )
+				LevelCounter.Instance.LevelCount = 2;
+		}
 	}
 }

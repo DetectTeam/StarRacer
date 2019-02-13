@@ -51,8 +51,6 @@ namespace StarRacer
 			star.StarPositionY = transform.position.y;
 
 			SessionManager.Instance.SetStarInfo( star );
-
-
 		}
 
 		private Vector3 GetRandomPosition()
