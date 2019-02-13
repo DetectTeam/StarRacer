@@ -4,56 +4,68 @@ using UnityEngine;
 
 
 //Spawn gameobjects at a random position and minimum distance from eachother within the confines of the camera view
-
-public class RandomSpawner : MonoBehaviour 
+namespace StarRacer
 {
-
-	[SerializeField] private float vertExtent;
-	[SerializeField] private float horzExtent;
-	[SerializeField] private float proximityRadius;
-	[SerializeField] private bool isValidPosition;
-	[SerializeField] private Collider2D[] hits;
-
-	private Transform cachedTransform;
-
-	private void Awake()
+	public class RandomSpawner : MonoBehaviour 
 	{
-		cachedTransform = transform;
-	}
 
-	private void OnEnable()
-	{
-		SetCameraBounds();
-		FindPositionToSpawn();
-	}
+		[SerializeField] private float vertExtent;
+		[SerializeField] private float horzExtent;
+		[SerializeField] private float proximityRadius;
+		[SerializeField] private bool isValidPosition;
+		[SerializeField] private Collider2D[] hits;
 
-	private void FindPositionToSpawn()
-	{
-		isValidPosition = false;
+		private Transform cachedTransform;
 
-		while( !isValidPosition )
+		private void Awake()
 		{
-			transform.position = GetRandomPosition();
+			cachedTransform = transform;
+		}
 
-			hits = Physics2D.OverlapCircleAll( transform.position, proximityRadius );
+		private void OnEnable()
+		{
+			SetCameraBounds();
+			FindPositionToSpawn();
+		}
 
-			if( hits.Length <= 1 )
+		private void FindPositionToSpawn()
+		{
+			isValidPosition = false;
+
+			while( !isValidPosition )
 			{
-					isValidPosition = true;
+				transform.position = GetRandomPosition();
+
+				hits = Physics2D.OverlapCircleAll( transform.position, proximityRadius );
+
+				if( hits.Length <= 1 )
+				{
+						isValidPosition = true;
+				}
 			}
-		}	
-	}
+			Debug.Log( "SEtting new star position...." );
+			
+			Star star = gameObject.GetComponent<Star>();
 
-	private Vector3 GetRandomPosition()
-	{
-		return new Vector3( Random.Range( -horzExtent, horzExtent ), Random.Range( -vertExtent, vertExtent - 3 ), cachedTransform.position.z  ) ;
-	}
+			star.StarPositionX = transform.position.x;
+			star.StarPositionY = transform.position.y;
 
-	private void SetCameraBounds()
-	{
-		vertExtent = Camera.main.orthographicSize - 2;    
-		horzExtent = ( vertExtent * Screen.width / Screen.height );
-		horzExtent = horzExtent - 1;
+			SessionManager.Instance.SetStarInfo( star );
+
+
+		}
+
+		private Vector3 GetRandomPosition()
+		{
+			return new Vector3( Random.Range( -horzExtent, horzExtent ), Random.Range( -vertExtent, vertExtent - 3 ), cachedTransform.position.z  ) ;
+		}
+
+		private void SetCameraBounds()
+		{
+			vertExtent = Camera.main.orthographicSize - 2;    
+			horzExtent = ( vertExtent * Screen.width / Screen.height );
+			horzExtent = horzExtent - 1;
+		}
+		
 	}
-	
 }

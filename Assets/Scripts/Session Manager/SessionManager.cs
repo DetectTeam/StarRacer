@@ -321,8 +321,8 @@ namespace StarRacer
 			StarInfo starInfo = new StarInfo();
 
 			starInfo.StarName = star.StarName;
-			starInfo.Location_X = star.StarPositionX;
-			starInfo.Location_Y = star.StarPositionY;
+			starInfo.Location_X = (float) Math.Round( star.StarPositionX , 2 );
+			starInfo.Location_Y = (float) Math.Round( star.StarPositionY , 2 );
 			starInfo.ColourCode = star.Colourcode;
 
 			session.StarInfo.Add( starInfo );
@@ -332,8 +332,8 @@ namespace StarRacer
 		{
 			StarInfo starInfo = new StarInfo();
 			
-			starInfo.Location_X = x;
-			starInfo.Location_Y = y;
+			starInfo.Location_X = (float) Math.Round( x );
+			starInfo.Location_Y = (float) Math.Round( y );
 			starInfo.ColourCode = colourCode;
 
 			session.StarInfo.Add( starInfo );

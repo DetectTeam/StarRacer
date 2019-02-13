@@ -10,6 +10,7 @@ namespace StarRacer
 	{
 		
 		[SerializeField] private bool isTutorial;
+		[SerializeField] private bool isRandom;
 		[SerializeField] private bool isLetter;
 		
 		private Transform _transform;
@@ -76,7 +77,6 @@ namespace StarRacer
 			_transform = transform;
 			uid = CreateUID();
 			
-
 			//starSpriteRenderer.color = starColours[ Random.Range( 0, starColours.Length -1 ) ];
 
 			starText = transform.Find( "StarText" ).GetComponent<TextMeshPro>();
@@ -84,8 +84,8 @@ namespace StarRacer
 			starPosX = transform.position.x;
 			starPosY = transform.position.y;
 
-			if(SessionManager.Instance)
-			SessionManager.Instance.SetStarInfo( gameObject.GetComponent<Star>() );
+			if(SessionManager.Instance && !isRandom )
+				SessionManager.Instance.SetStarInfo( gameObject.GetComponent<Star>() );
 			//SessionManager.Instance.SetStarInfo( starPosX, starPosY, colourCode );
 			//GetComponent<Collider2D>().enabled = true;
 		}
@@ -147,7 +147,6 @@ namespace StarRacer
 			SessionManager.Instance.EndSelection();
 
 			//StarManager.Instance.LastStarSelected = this.gameObject;
-
 		}
 
 		private void CorrectSelection()
@@ -162,7 +161,6 @@ namespace StarRacer
 			GetComponent<StarFxHandler>().ColourChange( starSpriteRenderer , new Color( 0.9716f, 0.8722f, 0.1512f, 1 ) );
 			isCorrect = false;
 
-			
 			Messenger<int>.Broadcast( "NextStar", orderIndex + 1 );
 
 			if( isTutorial )
@@ -176,12 +174,9 @@ namespace StarRacer
 			//Broadcast message to all stars
 			//pass the next starcount
 			
-
-
 			SessionManager.Instance.PreviousStar = gameObject.GetComponent<Star>();
 
-			GetComponent<Collider2D>().enabled = false;	
-			
+			GetComponent<Collider2D>().enabled = false;		
 		}
 
 		private void IncorrectSelection()
