@@ -115,7 +115,7 @@ namespace StarRacer
 			
 			SessionManager.Instance.StartTimer();
 		
-			//SessionManager.Instance.SetTargetStar();
+			SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.CurrentStar = gameObject.GetComponent<Star>();
 
