@@ -115,19 +115,16 @@ namespace StarRacer
 			
 			SessionManager.Instance.StartTimer();
 		
-			SessionManager.Instance.SetTargetStar();
+			SessionManager.Instance.SetTargetStar( isLetter );
 
 			SessionManager.Instance.CurrentStar = gameObject.GetComponent<Star>();
 
 			if( starText )
 			{
 				SessionManager.Instance.SetResponse( starText.text );
-				SessionManager.Instance.SetTargetDistractor( distractor );	
+				//SessionManager.Instance.SetTargetDistractor( distractor );	
 			}
-			else
-			{
-				SessionManager.Instance.SetTargetDistractor( "NA" );
-			}
+			
 			
 			SessionManager.Instance.SetResponseLocation( starPosX, starPosY );
 
@@ -152,6 +149,8 @@ namespace StarRacer
 		private void CorrectSelection()
 		{
 			//SessionManager.Instance.SetTargetResponseLocation( starPosX, starPosY );
+			
+			//SessionManager.Instance.SetTargetDistractor( distractor );
 			
 			SessionManager.Instance.LevelLayoutCount ++;
 
@@ -182,12 +181,12 @@ namespace StarRacer
 		private void IncorrectSelection()
 		{
 			//SessionManager.Instance.SetTargetStar();
-
+		
 			SessionManager.Instance.SetCorrect( 0 );
 
 			SessionManager.Instance.CheckForProximityError();
 			
-			Debug.Log( "Letter is: " + IsLetter );
+			
 
 			if( IsLetter )
 				SessionManager.Instance.CheckForPreservativeError();

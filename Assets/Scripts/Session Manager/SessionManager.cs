@@ -107,9 +107,16 @@ namespace StarRacer
 			SetLevel();
 		}
 
-		public void SetTargetStar( )
+		public void SetTargetStar( bool isLetter )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
+			
+			
+			if( !isLetter || levelLayoutCount == 0 || levelLayoutCount == ( LevelLayout.Count - 1 ) )
+				playerSelection.Target_Distractor =  "NA";
+			else if( levelLayoutCount < LevelLayout.Count - 1 )
+				playerSelection.Target_Distractor = LevelLayout[ levelLayoutCount + 1 ];
+		
 			SetTargetResponseLocation();
 		}
 
@@ -118,7 +125,7 @@ namespace StarRacer
 			playerSelection.Target_Response_Location_X = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.x, 2 );
 			playerSelection.Target_Response_Location_Y = ( float ) Math.Round( currentLevelStars[ levelLayoutCount ].gameObject.transform.position.y, 2 );
 
-			Debug.Log( "Current Selection : " + currentLevelStars[ levelLayoutCount ].gameObject.name );
+			//Debug.Log( "Current Selection : " + currentLevelStars[ levelLayoutCount ].gameObject.name );
 		}
 
 		public void SetResponseLocation( float x, float y )
@@ -163,7 +170,7 @@ namespace StarRacer
 			//Debug.Log( "Level Layout Count: " +  levelLayoutCount );
 			
 			playerSelection.Distance_From_Target = ( float ) Math.Round( Vector2.Distance( responseGameObject.transform.position, currentLevelStars[ levelLayoutCount ].gameObject.transform.position ), 2 );
-			Debug.Log( "Distance : " + playerSelection.Distance_From_Target );
+			//Debug.Log( "Distance : " + playerSelection.Distance_From_Target );
 		}
 
 		public void CreateSelection()
@@ -174,6 +181,8 @@ namespace StarRacer
 
 		public void EndSelection()
 		{
+			
+			//playerSelection.Target_Distractor = currentTargetDistractor.Trim();
 			//Debug.Log( "Selection Ending" );
 			session.PlayerSelection.Add( playerSelection );
 		}
@@ -240,9 +249,10 @@ namespace StarRacer
 			playerSelection.Correct = correct;
 		}
 
+		private string currentTargetDistractor;
 		public void SetTargetDistractor( string targetDistractor )
 		{
-			playerSelection.Target_Distractor = targetDistractor.Trim();
+			currentTargetDistractor = targetDistractor.Trim();
 		}
 
 
@@ -286,7 +296,7 @@ namespace StarRacer
 		{
 			CleanUp();
 			Debug.Log( "Ending Session" );
-		
+
 			tmpTime = 0;
 			
 			//Save the session
