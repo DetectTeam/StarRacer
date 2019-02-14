@@ -41,6 +41,8 @@ namespace StarRacer
 
 		[SerializeField] private GameObject responseGameObject;
 
+		public bool IsLetterLevel { get; set; }
+
 		private Coroutine timer;
 
 		public void Awake()
@@ -103,16 +105,26 @@ namespace StarRacer
 			session.FileName = session.SessionName + ".dat";
 
 			session.Hard_Coded_Or_Randomized = "Hard Coded";
-
 		}
 
-		public void SetTargetStar( bool isLetter )
+		public void SetTargetStar(  )
 		{
 			playerSelection.Target_Response_ID = LevelLayout[ levelLayoutCount ];
 			
-			
-			if( !isLetter || levelLayoutCount == 0 || levelLayoutCount == ( LevelLayout.Count - 1 ) )
+			if( !IsLetterLevel )
+			{
 				playerSelection.Target_Distractor =  "NA";
+			}
+			else if( levelLayoutCount == 0 )
+			{
+				Debug.Log( "LEvel layout counter = 0");
+				playerSelection.Target_Distractor =  "NA";
+			}
+			else if( levelLayoutCount == ( LevelLayout.Count - 1 ) )
+			{
+				Debug.Log( levelLayoutCount + " = " + ( LevelLayout.Count - 1 ) );
+				playerSelection.Target_Distractor =  "NA";
+			}
 			else if( levelLayoutCount < LevelLayout.Count - 1 )
 				playerSelection.Target_Distractor = LevelLayout[ levelLayoutCount + 1 ];
 		
@@ -152,7 +164,6 @@ namespace StarRacer
 				count = 6;
 			else
 				count = currentTargetStar.ProximityStars.Count;
-
 
 			for( int i = 1; i < count; i++  )
 			{

@@ -115,7 +115,7 @@ namespace StarRacer
 			
 			SessionManager.Instance.StartTimer();
 		
-			SessionManager.Instance.SetTargetStar( isLetter );
+			SessionManager.Instance.SetTargetStar();
 
 			SessionManager.Instance.CurrentStar = gameObject.GetComponent<Star>();
 
@@ -184,12 +184,10 @@ namespace StarRacer
 		
 			SessionManager.Instance.SetCorrect( 0 );
 
-			SessionManager.Instance.CheckForProximityError();
-			
-			
-
 			if( IsLetter )
 				SessionManager.Instance.CheckForPreservativeError();
+			
+			SessionManager.Instance.CheckForProximityError();
 			
 			GetComponent<StarFxHandler>().Shake( this.gameObject );
 			GetComponent<StarFxHandler>().ColourFade( starSpriteRenderer, starSpriteRenderer.color );

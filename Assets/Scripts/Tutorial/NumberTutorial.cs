@@ -37,9 +37,13 @@ namespace StarRacer
 		
 		private IEnumerator Tutorial()
 		{
+
 			
 			if( SessionManager.Instance )
+			{
 				SessionManager.Instance.SetLevel( 1 );
+				SessionManager.Instance.IsLetterLevel = false;
+			}
 
 			DisableStarColliders();
 			yield return new WaitForSeconds( 1.0f );

@@ -42,7 +42,10 @@ namespace StarRacer
 			Messenger.Broadcast( "StopTimer" );
 
 			if( SessionManager.Instance )
+			{
 				SessionManager.Instance.SetLevel( 2 );
+				SessionManager.Instance.IsLetterLevel = true;
+			}
 
 			DisableStarColliders();
 

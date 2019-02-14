@@ -126,11 +126,13 @@ namespace StarRacer
                 {
                     isLetter = true;
                     PlayerPrefs.SetInt("LevelType", 0);
+					SessionManager.Instance.IsLetterLevel = true;
                 }
                 else
                 {
                     isLetter = false;
                     PlayerPrefs.SetInt("LevelType", 1);
+					SessionManager.Instance.IsLetterLevel = false;
                 }
             }
             else
