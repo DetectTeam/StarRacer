@@ -44,6 +44,8 @@ namespace StarRacer
 		public bool IsButtonPressed { get{ return isButtonPressed; } set{ isButtonPressed = value; } }
 
 		[SerializeField] private List<Color> colourList;
+
+		[SerializeField] private Color grey;
  
 		void Awake()
 		{
@@ -83,7 +85,7 @@ namespace StarRacer
 
             SessionManager.Instance.SetNumberOrLetter(isLetter);
 
-            colourList.ShuffleList();
+            //colourList.ShuffleList();
 
             for (int x = 0; x < starCount; x++)
             {
@@ -197,7 +199,7 @@ namespace StarRacer
 				SessionManager.Instance.LevelLayout.Add( count.ToString()  );
 			}	
 
-			star.StarSpriteRenderer.color = colourList[ count - 1 ];
+			star.StarSpriteRenderer.color = grey;//colourList[ count - 1 ];
 			star.transform.parent = transform;
 		
 			star.gameObject.SetActive( true );
