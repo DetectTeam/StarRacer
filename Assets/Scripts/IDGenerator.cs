@@ -27,8 +27,10 @@ public class IDGenerator : MonoBehaviour
         else if (Instance != this)   
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);   
+
+        DontDestroyOnLoad( this.gameObject ); 
         
-        userId = System.Guid.NewGuid().ToString();
+        userId = System.Guid.NewGuid().ToString().Substring( 0, 8 );
 
         if( isNeeded )
             SetID();
@@ -39,8 +41,10 @@ public class IDGenerator : MonoBehaviour
     private void SetID()
     {
         Debug.Log( userId );
-        userIDText.text = userId;
-        PlayerPrefs.SetString( "user_id" , userId );
+
+        if( userIDText != null )
+            userIDText.text = userId;
+    
     }
 
 }

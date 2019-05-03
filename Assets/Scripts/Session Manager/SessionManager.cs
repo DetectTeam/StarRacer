@@ -303,7 +303,7 @@ namespace StarRacer
 
 			tmpTime = 0;
 			Debug.Log( "End Session ::::: :" + PlayerPrefs.GetString( "user_id" ) );
-			session.SessionID = PlayerPrefs.GetString( "user_id" );
+			session.PlayerID = IDGenerator.Instance.UserID;
 
 			//Save the session
 			PersistenceManager.Instance.Save( session );
