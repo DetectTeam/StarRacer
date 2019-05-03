@@ -83,11 +83,12 @@ namespace StarRacer
 		{
 			Debug.Log( "Creating new Session...." );
 
-			sessionUid = System.Guid.NewGuid().ToString();
+			//sessionUid = System.Guid.NewGuid().ToString();
+			
 
 			session = new Session();
-			session.SessionID = sessionUid;
-
+			
+			
 			session.DeviceType = deviceType;
 			session.DeviceModel = deviceModel;
 			session.DeviceName = deviceName;
@@ -301,7 +302,9 @@ namespace StarRacer
 			Debug.Log( "Ending Session" );
 
 			tmpTime = 0;
-			
+			Debug.Log( "End Session ::::: :" + PlayerPrefs.GetString( "user_id" ) );
+			session.SessionID = PlayerPrefs.GetString( "user_id" );
+
 			//Save the session
 			PersistenceManager.Instance.Save( session );
 			
